@@ -1,0 +1,84 @@
+.button {
+    background: -webkit-linear-gradient(top, #008dfd 0, #0370ea 100%);
+    border: 1px solid #076bd2;
+    border-radius: 3px;
+    color: #fff;
+    display: none;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1.3;
+    padding: 8px 25px;
+    text-align: center;
+    text-shadow: 1px 1px 1px #076bd2;
+    letter-spacing: normal;
+}
+
+.final {
+    color: black;
+    padding-right: 3px;
+}
+
+.interim {
+    color: gray;
+}
+
+.right {
+    float: right;
+}
+
+#results {
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: left;
+    min-height: 150px;
+}
+
+.character{    
+    display: inline-block;
+}
+
+.wave span:after {
+    content: "〜";
+    display: inline-block;
+    -webkit-transform: rotate(50deg) translate(-50%);    
+    -moz-transform: rotate(50deg) translate(-50%);
+    -ms-transform: rotate(50deg) translate(-50%);
+    -o-transform: rotate(50deg) translate(-50%);
+    transform: rotate(90deg) translate(-50%);
+    padding:0px;
+    margin:0 -50px 0 -20px;
+    font-size: 5em;
+}
+
+.star span:after {
+    content: "☆";
+    display: inline-block;
+    font-size: 5em;
+}
+
+.square span:after {
+    content: "⃞";
+    display: inline-block;
+    font-size: 5em;
+}
+
+.plus span:after {
+    content: "+";
+    display: inline-block;
+    font-size: 5em;
+}
+
+.circle span:after {
+    content: "⃝";
+    display: inline-block;
+    font-size: 5em;
+}
+
+
+
+
+
+
+
