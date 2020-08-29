@@ -68,7 +68,7 @@ var recognition = null;
     recognition.onstart = function(){
         datastore.recognizing = true;
         console.log('started listening');
-        $("#start_button").text(datastore.button_states.during);
+        setSpeechButtonText(datastore.button_states.during);
     }
 
     recognition.onresult = function(event) {
@@ -80,7 +80,7 @@ var recognition = null;
     recognition.onstop = function(){
         datastore.recognizing = false;
         console.log('stopped listening');
-        $("#start_button").text(datastore.button_states.start);
+        setSpeechButtonText(datastore.button_states.start);
     }
 
     recognition.onspeechend = function(){
@@ -101,11 +101,15 @@ var recognition = null;
 $('#speak').click(() => {
     if (datastore.recognizing) return;      
 
-    $("#start_button").text(datastore.button_states.during);
+    setSpeechButtonText(datastore.button_states.during);
     recognition.start();
     console.log('Ready to recieve a color command');
 });
 
+
+function setSpeechButtonText(text) {    
+    $("#speak").html(text);
+}
 
 
 function speak(msg) {
