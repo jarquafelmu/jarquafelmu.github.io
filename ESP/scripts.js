@@ -114,7 +114,7 @@ $('#speak').click(() => {
 });
 
 function getCard(input){
-    return cards.find(element => element.name === input);
+    return cards.find(element => element.name === input.toLowerCase());
 }
 
 function setSpeechButtonText(text) {
