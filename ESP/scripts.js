@@ -73,9 +73,11 @@ var recognition = null;
 
     recognition.onresult = function(event) {
         var result = event.results[0][0];
-        diagnostic.text(`Result received ${result.transcript}`);
+        let word = result.transcript.toLowerCase();
+        diagnostic.text(`Result received ${word}`);
+        console.log(`Result received ${word}`);
         console.log(`Confidence: ${result.confidence}`);
-        const card = getCard(result.transcript);
+        const card = getCard(word);
         if (card === undefined) {
             console.log("not a valid card");
             speak(voiceLines.notvalid);
@@ -114,7 +116,7 @@ $('#speak').click(() => {
 });
 
 function getCard(input){
-    return cards.find(element => element.name === input.toLowerCase());
+    return cards.find(element => element.name === input);
 }
 
 function setSpeechButtonText(text) {
