@@ -107,7 +107,8 @@ $('#speak').click(() => {
 });
 
 
-function setSpeechButtonText(text) {    
+function setSpeechButtonText(text) {
+    console.log(`setting button text to: ${text}`);
     $("#speak").html(text);
 }
 
