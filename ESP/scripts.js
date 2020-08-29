@@ -51,7 +51,7 @@ var recognition = null;
 
     var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
     var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
-    var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
+    // var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
 
     recognition = new SpeechRecognition();
     var grammar = '#JSFG V1.0; grammar cards; public <card> = star | circle | square | waves | plus ;'
@@ -97,17 +97,13 @@ var recognition = null;
 }
 
 
-function speechRecognition() {
-    if (datastore.recognizing) {
-        datastore.recognizing = false;
-        console.log('force stopping');
-        recognition.stop();
-        return;
-    }
-
+$('#speak').click(() => {    
     recognition.start();
+    $("#start_button").text(datastore.button_states.during);
     console.log('Ready to recieve a color command');
-}
+});
+
+
 
 function speak(msg) {
     if (!('speechSynthesis' in window)) {
