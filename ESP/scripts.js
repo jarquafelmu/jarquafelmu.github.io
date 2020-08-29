@@ -23,10 +23,10 @@ var voiceLines = {
     opening: "I'm going to test you for extra sensory power. The other side of this card is a circle, plus, waves, square, or star. Clear your mind. When you're ready, say the name out loud.",
     correct: "You got that correct, you're still a puny mortal.",
     incorrect: "You were wrong, better luck next time, non-ESP-gifted-mortal.",
-    notvalid: "that was not a valid option.",
+    notvalid: "That was not a valid card. Try again, mortal.",
     exit: "Goodbye.",
-    next: "next",
-    console: "that's alright mortal, we can't all be gifted"
+    next: "Next",
+    console: "That's alright mortal, we can't all be gifted."
 }
 
 var datastore = {
@@ -75,6 +75,12 @@ var recognition = null;
         var result = event.results[0][0];
         diagnostic.text(`Result received ${result.transcript}`);
         console.log(`Confidence: ${result.confidence}`);
+        const card = getCard(result.transcript);
+        if (card === undefined) {
+            speak(voiceLines.notvalid);
+        } else {
+            speak(voiceLines.correct);
+        }
     }
 
     recognition.addEventListener('end', function(){
@@ -88,7 +94,7 @@ var recognition = null;
     }
 
     recognition.onnomatch = function() {
-        diagnostic.text("I didn't recognize that card");
+        diagnostic.text("I didn't recognize that word");
         console.log("Speech not recognized");
     }
 
@@ -99,13 +105,15 @@ var recognition = null;
 
 
 $('#speak').click(() => {
-    if (datastore.recognizing) return;      
-
+    if (datastore.recognizing) return;
     setSpeechButtonText(datastore.button_states.during);
     recognition.start();
     console.log('Ready to recieve a color command');
 });
 
+function getCard(input){
+    return cards.find(element => element.name === input);
+}
 
 function setSpeechButtonText(text) {
     console.log(`setting button text to: ${text}`);
