@@ -84,7 +84,7 @@ var recognition = null;
     });
 
     recognition.onspeechend = function(){
-        recognition.stop();
+        console.log("Speech has stopped being detected");
     }
 
     recognition.onnomatch = function() {
