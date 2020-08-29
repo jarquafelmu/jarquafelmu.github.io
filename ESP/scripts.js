@@ -99,10 +99,10 @@ var recognition = null;
 
 
 $('#speak').click(() => {
-    if (datastore.recognizing) recognition.stop();      
+    if (datastore.recognizing) return;      
 
-    recognition.start();
     $("#start_button").text(datastore.button_states.during);
+    recognition.start();
     console.log('Ready to recieve a color command');
 });
 
