@@ -77,8 +77,10 @@ var recognition = null;
         console.log(`Confidence: ${result.confidence}`);
         const card = getCard(result.transcript);
         if (card === undefined) {
+            console.log("not a valid card");
             speak(voiceLines.notvalid);
         } else {
+            console.log("valid card");
             speak(voiceLines.correct);
         }
     }
