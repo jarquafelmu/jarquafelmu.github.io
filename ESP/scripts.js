@@ -20,8 +20,8 @@ var cards = [{
     }
 ];
 var voiceLines = {
-    opening: "I'm going to test you for extra sensory power. The other side of this card is a circle, plus, waves, square, or star. Clear your mind. When you're ready, say the name out loud.",
-    correct: "You got that correct, you're still a puny mortal.",
+    opening: "I'm going to test you for extra sensory power. The other side of this card is a circle, plus, waves, square, or star. Clear your mind. When you're ready, if you are ever ready, say the name out loud.",
+    correct: "You got that correct but you're still just a mortal.",
     incorrect: "You were wrong, better luck next time, non-ESP-gifted-mortal.",
     notvalid: "That was not a valid card. Try again, mortal.",
     exit: "Goodbye.",
@@ -64,13 +64,13 @@ var recognition = null;
     recognition.maxAlternatives = 1;
     var recognizing = false;
 
-    recognition.onstart = function(){
+    recognition.addEventListener('start', function(){
         datastore.recognizing = true;
         console.log('started listening');
         setSpeechButtonText(datastore.button_states.during);
-    }
+    });
 
-    recognition.onresult = function(event) {
+    recognition.addEventListener('result', function(){
         var result = event.results[0][0];
         let word = result.transcript.toLowerCase();
         diagnostic.text(`Result received ${word}`);
@@ -84,7 +84,7 @@ var recognition = null;
             console.log("valid card");
             speak(voiceLines.correct);
         }
-    }
+    });
 
     recognition.addEventListener('end', function(){
         datastore.recognizing = false;
