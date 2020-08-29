@@ -63,6 +63,7 @@ var recognition = null;
     recognition.lang = 'en-US';
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
+    var recognizing = false;
 
     recognition.onstart = function(){
         datastore.recognizing = true;
@@ -97,7 +98,9 @@ var recognition = null;
 }
 
 
-$('#speak').click(() => {    
+$('#speak').click(() => {
+    if (datastore.recognizing) recognition.stop();      
+
     recognition.start();
     $("#start_button").text(datastore.button_states.during);
     console.log('Ready to recieve a color command');
