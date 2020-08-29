@@ -51,10 +51,9 @@ var recognition = null;
 
     var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
     var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
-    // var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
 
     recognition = new SpeechRecognition();
-    var grammar = '#JSFG V1.0; grammar cards; public <card> = star | circle | square | waves | plus ;'
+    var grammar = '#JSFG V1.0; grammar cards; public <card> = star | circle | square | wave | waves | plus ;'
     var speechRecognitionList = new SpeechGrammarList();
     speechRecognitionList.addFromString(grammar, 1);
 
