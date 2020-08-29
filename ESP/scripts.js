@@ -77,11 +77,11 @@ var recognition = null;
         console.log(`Confidence: ${result.confidence}`);
     }
 
-    recognition.onstop = function(){
+    recognition.addEventListener('end', function(){
         datastore.recognizing = false;
         console.log('stopped listening');
         setSpeechButtonText(datastore.button_states.start);
-    }
+    });
 
     recognition.onspeechend = function(){
         recognition.stop();
