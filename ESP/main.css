@@ -39,7 +39,7 @@
     display: inline-block;
 }
 
-.wave span:after {
+.wave span.after {
     content: "〜";
     display: inline-block;
     -webkit-transform: rotate(50deg) translate(-50%);    
