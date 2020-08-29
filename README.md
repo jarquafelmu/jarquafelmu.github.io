@@ -5,7 +5,7 @@ You can use the [editor on GitHub](https://github.com/jarquafelmu/jarquafelmu.gi
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
 ### Projects
-* [ESP](https://github.com/jarquafelmu/jarquafelmu.github.io)
+* ESP [REPO](https://jarquafelmu.github.io/ESP) [SITE](https://jarquafelmu.github.io/ESP/index.html)
 
 ### Markdown
 
