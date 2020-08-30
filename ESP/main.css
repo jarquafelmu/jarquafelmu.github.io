@@ -26,6 +26,12 @@
     float: right;
 }
 
+.card {
+    -webkit-text-stroke-color: black;
+    -webkit-text-stroke-width: 1px;
+    font-weight: bold;
+}
+
 #results {
     font-size: 14px;
     font-weight: bold;
@@ -39,14 +45,14 @@
     display: inline-block;
 }
 
-.wave span:after {
+.waves span:after {
     content: "〜";
     display: inline-block;
-    -webkit-transform: rotate(50deg) translate(-50%);    
-    -moz-transform: rotate(50deg) translate(-50%);
-    -ms-transform: rotate(50deg) translate(-50%);
-    -o-transform: rotate(50deg) translate(-50%);
-    transform: rotate(90deg) translate(-50%);
+    -webkit-transform: rotate(90deg) translate(0%,8%);
+    -moz-transform: rotate(90deg) translate(0%,8%);
+    -ms-transform: rotate(90deg) translate(0%,8%);
+    -o-transform: rotate(90deg) translate(0%,8%);
+    transform: rotate(90deg) translate(0%,8%);
     padding:0px;
     margin:0 -50px 0 -20px;
     font-size: 5em;
@@ -55,23 +61,108 @@
 .star span:after {
     content: "☆";
     display: inline-block;
-    font-size: 5em;
+    font-size: 7em;
+    transform: translate(-15%, -19%);
 }
 
 .square span:after {
     content: "□";
     display: inline-block;
-    font-size: 5em;
+    font-size: 7em;
+    transform: translate(0, -25%);
 }
 
 .plus span:after {
     content: "+";
     display: inline-block;
-    font-size: 5em;
+    font-size: 7em;
+    transform: translate(-6%, -19%);
 }
 
 .circle span:after {
     content: "○";
     display: inline-block;
     font-size: 5em;
+}
+
+#overlay {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.2);
+    z-index: 2;
+    cursor: pointer;
+}
+
+#overlay .text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 2em;
+    /* transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%); */
+    /* animation: 2.5s ease 0s normal none infinite running animationHeartBeat; */
+}
+
+.listening {
+    animation: 2.5s ease 0s normal none infinite running animationBreathe;
+}
+
+@keyframes animationHeartBeat {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    5% {
+        transform: scale(1.4);
+        opacity: .5;
+    }
+    10% {
+        transform: scale(1.3);
+        opacity: .3;
+    }
+    15% {
+        transform: scale(1.8);
+        opacity: .8;
+    }
+    50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes animationBreathe {
+    0% {
+        transform: scale(1);
+    }
+    20% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(1.4);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.card-width {
+    width:8rem;
+    border-width: 3px;
+}
+
+.card-back {
+    min-height: 12em;
 }
