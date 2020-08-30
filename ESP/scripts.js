@@ -34,6 +34,11 @@ var datastore = {
     },
     numcopies: 5,
     recognizing: false,
+    score: {
+        correct: 0,
+        total: 25,
+        target: 11
+    },
     voicelines: {
         opening: "I'm going to test you for extra sensory power. The other side of this card is a circle, plus, waves, square, or star. Clear your mind. When you're ready, if you are ever ready, say the name out loud. You may also say 'cancel' if you are scared.",
         // correct: "You got that correct but you're still just a mortal.",
@@ -160,10 +165,16 @@ function buildDeck() {
             deck.push(card.face);
         }
     });
+
+    deck.sort((a, b) => {
+        // by giving a random number, the cards will be sorted in a
+        // random order
+        return Math.random() - 0.5;
+    });
 }
 
 function deal() {
-    return deck[Math.random * datastore.decksize];
+    return deck.pop();
 }
 
 hideCards();
@@ -174,6 +185,8 @@ $('#speak').click(() => {
     setSpeechButtonText(datastore.button_states.during);
     console.log('Ready to receive a color command');
 });
+
+
 
 // $("#overlay").click(() => {
 //     $(this).hide();
