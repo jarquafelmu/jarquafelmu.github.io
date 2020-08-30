@@ -1,6 +1,6 @@
 var datastore = {
     button_states: {
-        start: 'Listen',
+        start: 'Begin',
         during: 'Listening',
         error: 'Error'
     },
@@ -35,9 +35,9 @@ var datastore = {
     numcopies: 5,
     recognizing: false,
     score: {
-        correct: 0,
+        current: 0,
         total: 25,
-        target: 11
+        threshold: 11
     },
     voicelines: {
         opening: "I'm going to test you for extra sensory power. The other side of this card is a circle, plus, waves, square, or star. Clear your mind. When you're ready, if you are ever ready, say the name out loud. You may also say 'cancel' if you are scared.",
@@ -47,11 +47,13 @@ var datastore = {
         notvalid: "invalid",
         notunderstood: "I didn't get that, try again",
         exit: "Goodbye.",
+        quit: "It's okay, you are just a mortal. Refresh and come back when you are braver.",
         next: "Next",
         console: "That's alright mortal, we can't all be gifted."
     }
 }
-$("#start_button").text(datastore.button_states.start);
+
+const sleep = (delay) => new Promise((reslove) => setTimeout(resolve, delay));
 
 var recognition = null;
 { // voice recognition setup
@@ -61,7 +63,7 @@ var recognition = null;
     var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
 
     recognition = new SpeechRecognition();
-    var grammar = '#JSFG V1.0; grammar cards; public <card> = star | circle | square | wave | waves | plus | cancel | quit ;'
+    var grammar = '#JSFG V1.0; grammar cards; public <card> = star | circle | square | waves | plus | cancel ;'
     var speechRecognitionList = new SpeechGrammarList();
     speechRecognitionList.addFromString(grammar, 1);
 
@@ -74,43 +76,39 @@ var recognition = null;
 
     recognition.addEventListener('start', function () {
         datastore.recognizing = true;
-        console.debug('started listening');
-        setSpeechButtonText(datastore.button_states.during);
-        $("#overlay").show();
+        console.info('started listening');
+        // setSpeechButtonText(datastore.button_states.during);
+        $("#overlay-listen").show();
     });
 
     recognition.addEventListener('result', function () {
         var result = event.results[0][0];
         let word = result.transcript.toLowerCase();
-        console.debug(`Result received ${word}`);
+        console.info(`Result received ${word}`);
 
-        const card = getCard(word);
-        if (card === undefined) {
-            console.debug("not a valid card");
-            speak(datastore.voicelines.notvalid);
-        } else {
-            console.debug("valid card");
-            speak(datastore.voicelines.correct);
-            hideCards(true);
-            $(`#${card.name}`).show();
-            
+        if (word === 'cancel') {
+            quit();
+            return;
         }
+
+        processInput(word);
     });
 
     recognition.addEventListener('end', function () {
         datastore.recognizing = false;
-        console.debug('stopped listening');
-        setSpeechButtonText(datastore.button_states.start);
-        $("#overlay").hide();
+        console.info('stopped listening');
+        // setSpeechButtonText(datastore.button_states.start);
+        $("#overlay-listen").hide();        
+        gameLoop();
     });
 
     recognition.onspeechend = function () {
-        console.debug("Speech has stopped being detected");
+        console.info("Speech has stopped being detected");
     }
 
     recognition.onnomatch = function () {
         diagnostic.text("I didn't recognize that word");
-        console.debug("Speech not recognized");
+        console.info("Speech not recognized");
     }
 
     recognition.onerror = function (event) {
@@ -118,16 +116,49 @@ var recognition = null;
     }
 }
 
-function getCard(input) {
+window.addEventListener('beforeunload', function() {
+    recognition.abort();
+});
+
+async function processInput(word) {
+    const card = getCard(word);
+    if (card === undefined) {
+        console.info("not a valid card");
+        await speak(datastore.voicelines.notvalid);
+        recognition.start();
+    } else {
+        console.info("valid card");
+
+        // speak(datastore.voicelines.correct);
+        // hideCards(true);
+        // $(`#${card.name}`).show();     
+        gradeChoice(card);
+    }
+}
+
+async function gradeChoice(choice) {
+    if (currentCard.face === choice.face)
+        correctAnswer();
+    else
+        incorrectAnswer();
+}
+
+async function correctAnswer() {
+    await speak(datastore.voicelines.correct);
+    increaseScore();
+    sleep(1000);
+}
+
+async function incorrectAnswer() {
+    await speak(datastore.voicelines.incorrect);
+    sleep(1000);
+}
+
+async function getCard(input) {
     return datastore.cards.find(element => element.name === input);
 }
 
-function setSpeechButtonText(text) {
-    // console.log(`setting button text to: ${text}`);
-    $("#speak").html(text);
-}
-
-function speak(msg) {
+async function speak(msg) {
     if (!('speechSynthesis' in window)) {
         alert("Your browser does not support speech synthesis.");
         return false;
@@ -135,11 +166,12 @@ function speak(msg) {
         var u = new SpeechSynthesisUtterance(msg);
         // u.text = msg;
         speechSynthesis.speak(u);
+        await sleep(1000);
         return true;
     }
 }
 
-function hideCards(all = false) {
+async function hideCards(all = false) {
     let target = ".card"
     if (!all)
         target = `${target}.face`
@@ -147,37 +179,41 @@ function hideCards(all = false) {
 }
 
 
-function begin() {
-    speak(datastore.voicelines.opening);
+async function begin() {
+    await speak(datastore.voicelines.opening);
 }
 
-function correct() {
-    speak(datastore.voicelines.correct);
+async function correct() {
 }
 
-function incorrect() {
-    speak(datastore.voicelines.incorrect);
+async function incorrect() {
 }
 
-function buildDeck() {
+async function buildDeck() {
     datastore.cards.forEach((card) => {
         for (let i = 0; i < datastore.numcopies; ++i) {
-            deck.push(card.face);
+            datastore.deck.push(card.face);
         }
     });
 
-    deck.sort((a, b) => {
+    datastore.deck.sort((a, b) => {
         // by giving a random number, the cards will be sorted in a
         // random order
         return Math.random() - 0.5;
     });
 }
 
-function deal() {
-    return deck.pop();
+async function deal() {
+    return translate(datastore.deck.pop());
+    // return datastore.cards.find(element => element.name === 'star');
+}
+
+async function translate(deckcard) {
+    return datastore.cards.find(element => element.face === deckcard);
 }
 
 hideCards();
+$("#overlay-begin").show();
 
 $('#speak').click(() => {
     if (datastore.recognizing) return;
@@ -186,15 +222,28 @@ $('#speak').click(() => {
     console.log('Ready to receive a color command');
 });
 
+$("#overlay-listen").click(() => {
+    $(this).hide();
+    recognition.stop();
+});
 
+$("#overlay-begin").click(() => {
+    // console.log(this);
+    // $(this).hide();
+    $("#overlay-begin").hide();
+    game();
+});
 
-// $("#overlay").click(() => {
-//     $(this).hide();
-//     recognition.stop();
-// });
-
+let currentCard = null;
 // game
-function game() {
+async function game() {
+    // begin
+    await speak(datastore.voicelines.opening);
+    
+
+    buildDeck();
+    gameLoop();
+    
     // pick a card
     // introduce the user
     // user guesses
@@ -204,4 +253,39 @@ function game() {
     // loop 25 times
 }
 
+async function endGame(won) {
+    if (won) {}
+}
 
+async function quit() {
+    await speak(datastore.voicelines.quit);
+}
+
+async function gameLoop() {   
+    displayScore(); 
+    currentCard = deal();
+    recognition.start();
+}
+
+async function displayScore() {
+    $("#correct").html(datastore.score.current);
+    $("#total").html(datastore.score.total);
+}
+
+async function increaseScore() {
+    datastore.score.current += 1;
+}
+
+async function checkGameOver() {
+    if (datastore.score.current >= datastore.score.threshold) {
+        // game won
+        endGame(true);
+    }
+    else if (datastore.deck.length == 0) {
+        // game is over, player lost
+        endGame(false);
+    }
+    // go again
+    await speak(datastore.voicelines.next);
+    gameLoop()
+}

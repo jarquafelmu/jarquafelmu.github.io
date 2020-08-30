@@ -85,7 +85,7 @@
     font-size: 5em;
 }
 
-#overlay {
+.overlay {
     position: absolute;
     display: none;
     width: 100%;
@@ -94,53 +94,32 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0,0,0,0.4);
     z-index: 2;
+    transition-duration: 10s;
     cursor: pointer;
 }
 
-#overlay .text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+.overlay .text {
     font-size: 2em;
-    /* transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%); */
-    /* animation: 2.5s ease 0s normal none infinite running animationHeartBeat; */
+}
+
+.begin {
+    position: relative;
+    top: 30%;
+    left: 30%;
 }
 
 .listening {
-    animation: 2.5s ease 0s normal none infinite running animationBreathe;
-}
-
-@keyframes animationHeartBeat {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    5% {
-        transform: scale(1.4);
-        opacity: .5;
-    }
-    10% {
-        transform: scale(1.3);
-        opacity: .3;
-    }
-    15% {
-        transform: scale(1.8);
-        opacity: .8;
-    }
-    50% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+    position: absolute;
+    top: 30%;
+    left: 45%; 
+    animation: 3.5s ease 0s normal none infinite running animationBreathe;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
 }
 
 @keyframes animationBreathe {
