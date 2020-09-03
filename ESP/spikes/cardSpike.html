@@ -16,10 +16,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: row;
       }
       .card::after {
         content: "";
-        border: 2px solid blue;
+        /* border: 2px solid blue; */
         display: block;
         width: 132px;
         height: 212px;
@@ -57,10 +58,12 @@
     </style>
   </head>
   <body>
-    <div class="card circle"></div>
-    <div class="card plus"></div>
-    <div class="card waves"></div>
-    <div class="card square"></div>
-    <div class="card star"></div>
+    <div class="container">
+      <!-- <div class="card circle"></div> -->
+      <!-- <div class="card plus"></div> -->
+      <!-- <div class="card waves"></div> -->
+      <!-- <div class="card square"></div> -->
+      <div class="card star"></div>
+    </div>
   </body>
 </html>
