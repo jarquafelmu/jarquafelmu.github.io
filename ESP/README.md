@@ -1,4 +1,4 @@
-### Checklist
+# Checklist
 * [x] Submit a zip of your ESP1 code
 * [ ] Change card faces to use SVG
 * [ ] Change JS to only be vanilla
