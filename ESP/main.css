@@ -32,7 +32,7 @@
 }
 
 .circle::after {
-    background-image: url('../assets/svg/zener_cards.svg');
+    background-image: url('../ESP/assets/svg/zener_cards.svg');
     background-position: -20px -20px;
     background-repeat: no-repeat;
     z-index: -2;
@@ -43,7 +43,7 @@
 }
 
 .plus::after {
-    background-image: url('../assets/svg/zener_cards.svg');
+    background-image: url('../ESP/assets/svg/zener_cards.svg');
     background-position: -160px -20px;
     background-repeat: no-repeat;
 }
@@ -53,7 +53,7 @@
 }
 
 .waves::after {
-    background-image: url('../assets/svg/zener_cards.svg');
+    background-image: url('../ESP/assets/svg/zener_cards.svg');
     background-position: -300px -20px;
     background-repeat: no-repeat;
 }
@@ -63,7 +63,7 @@
 }
 
 .square::after {
-    background-image: url('../assets/svg/zener_cards.svg');
+    background-image: url('../ESP/assets/svg/zener_cards.svg');
     background-position: -440px -20px;
     background-repeat: no-repeat;
 }
@@ -73,7 +73,7 @@
 }
 
 .star::after {
-    background-image: url('../assets/svg/zener_cards.svg');
+    background-image: url('../ESP/assets/svg/zener_cards.svg');
     background-position: -580px -20px;
     background-repeat: no-repeat;
 }
