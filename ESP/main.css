@@ -1,147 +1,94 @@
-.button {
-    background: -webkit-linear-gradient(top, #008dfd 0, #0370ea 100%);
-    border: 1px solid #076bd2;
-    border-radius: 3px;
-    color: #fff;
-    display: none;
-    font-size: 13px;
-    font-weight: bold;
-    line-height: 1.3;
-    padding: 8px 25px;
-    text-align: center;
-    text-shadow: 1px 1px 1px #076bd2;
-    letter-spacing: normal;
+.zener-card::after {
+    content: "";
+    /* border: 2px solid blue; */
+    display: block;
+    width: 132px;
+    height: 212px;
+    background-image: radial-gradient(blue, #2e4052, #ffc857, blue);
+    /* background-size: 130px 212px; */
+    /* transition: all 1s ease; */
 }
 
-.final {
-    color: black;
-    padding-right: 3px;
+#hero.zener-card::after {
+    border: 1px solid black;
+    border-radius: 20px 20px 20px 20px;
+    -moz-border-radius: 20px 20px 20px 20px;
+    -webkit-border-radius: 20px 20px 20px 20px;
 }
 
-.interim {
-    color: gray;
+.btn.zener-card::after {
+    width: 50px;
+    height: 85px;
+    background-size: 275px 100px;
+    padding: 0;
+    margin: 0;
+    /* border shadow */
+    -webkit-box-shadow: 13px 7px 11px -3px rgba(140, 138, 140, 0.48);
+    -moz-box-shadow: 13px 7px 11px -3px rgba(140, 138, 140, 0.48);
+    box-shadow: 13px 7px 11px -3px rgba(140, 138, 140, 0.48);
+    border-radius: 8px 8px 8px 8px;
+    -moz-border-radius: 8px 8px 8px 8px;
+    -webkit-border-radius: 8px 8px 8px 8px;
 }
 
-.right {
-    float: right;
+.circle::after {
+    background-image: url('../assets/svg/zener_cards.svg');
+    background-position: -20px -20px;
+    background-repeat: no-repeat;
+    z-index: -2;
 }
 
-.card {
-    -webkit-text-stroke-color: black;
-    -webkit-text-stroke-width: 1px;
-    font-weight: bold;
+.btn.circle::after {
+    background-position: -7px;
 }
 
-#results {
-    font-size: 14px;
-    font-weight: bold;
-    border: 1px solid #ddd;
-    padding: 15px;
-    text-align: left;
-    min-height: 150px;
+.plus::after {
+    background-image: url('../assets/svg/zener_cards.svg');
+    background-position: -160px -20px;
+    background-repeat: no-repeat;
 }
 
-.character{    
-    display: inline-block;
+.btn.plus::after {
+    background-position: -60px;
 }
 
-.waves span:after {
-    content: "〜";
-    display: inline-block;
-    -webkit-transform: rotate(90deg) translate(0%,8%);
-    -moz-transform: rotate(90deg) translate(0%,8%);
-    -ms-transform: rotate(90deg) translate(0%,8%);
-    -o-transform: rotate(90deg) translate(0%,8%);
-    transform: rotate(90deg) translate(0%,8%);
-    padding:0px;
-    margin:0 -50px 0 -20px;
-    font-size: 5em;
+.waves::after {
+    background-image: url('../assets/svg/zener_cards.svg');
+    background-position: -300px -20px;
+    background-repeat: no-repeat;
 }
 
-.star span:after {
-    content: "☆";
-    display: inline-block;
-    font-size: 7em;
-    transform: translate(-15%, -19%);
+.btn.waves::after {
+    background-position: -113px;
 }
 
-.square span:after {
-    content: "□";
-    display: inline-block;
-    font-size: 7em;
-    transform: translate(0, -25%);
+.square::after {
+    background-image: url('../assets/svg/zener_cards.svg');
+    background-position: -440px -20px;
+    background-repeat: no-repeat;
 }
 
-.plus span:after {
-    content: "+";
-    display: inline-block;
-    font-size: 7em;
-    transform: translate(-6%, -19%);
+.btn.square::after {
+    background-position: -165px;
 }
 
-.circle span:after {
-    content: "○";
-    display: inline-block;
-    font-size: 5em;
+.star::after {
+    background-image: url('../assets/svg/zener_cards.svg');
+    background-position: -580px -20px;
+    background-repeat: no-repeat;
 }
 
-.overlay {
+.btn.star::after {
+    background-position: -218px;
+}
+
+.subtle {
+    font-size: 0.6em;
+}
+
+.page-footer {
     position: absolute;
-    display: none;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.4);
-    z-index: 2;
-    transition-duration: 10s;
-    cursor: pointer;
-}
-
-.overlay .text {
-    font-size: 2em;
-}
-
-.begin {
-    position: relative;
-    top: 30%;
-    left: 30%;
-}
-
-.listening {
-    position: absolute;
-    top: 30%;
-    left: 45%; 
-    animation: 3.5s ease 0s normal none infinite running animationBreathe;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-}
-
-@keyframes animationBreathe {
-    0% {
-        transform: scale(1);
-    }
-    20% {
-        transform: scale(1.2);
-    }
-    50% {
-        transform: scale(1.4);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-.card-width {
-    width:8rem;
-    border-width: 3px;
-}
-
-.card {
-    height: 12em;
+    width: 100%;
+    /* left: 0; */
 }
