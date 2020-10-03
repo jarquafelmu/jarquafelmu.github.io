@@ -1,3 +1,10 @@
+// built in
 @import '~bootstrap';
 @import '~bootstrap-vue';
-@import 'css/main.scss';
+
+// theming
+@import 'css/darkster.scss'; // dark
+// @import 'css/herbie.scss'; // light
+
+// customization
+@import 'css/custom.scss';
