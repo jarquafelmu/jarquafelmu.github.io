@@ -1,17 +1,21 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Coming soon..." />
+    <Container msg="Coming soon..." />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Container from "./components/Container.vue";
+// import HelloWorld from "./components/HelloWorld.vue";
 
 export default {
   name: "App",
+  meta: {
+    title: "ESP",
+  },
   components: {
-    HelloWorld,
+    Container,
   },
 };
 </script>
