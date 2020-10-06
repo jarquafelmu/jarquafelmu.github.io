@@ -1,10 +1,9 @@
 // built in
-@import '~bootstrap';
-@import '~bootstrap-vue';
+@import "~bootstrap";
+@import "~bootstrap-vue";
 
 // theming
-@import 'css/darkster.scss'; // dark
-// @import 'css/herbie.scss'; // light
+@import "css/imported/darkster.scss"; // dark
 
 // customization
-@import 'css/custom.scss';
+@import "css/card_styling.scss";
