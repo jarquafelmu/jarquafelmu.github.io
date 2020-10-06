@@ -1,0 +1,40 @@
+<template>
+  <div
+    id="hero"
+    class="card border rounded border-primary zener-card m-3 shadow shadow-lg wrong"
+    @click="handle(index)"
+  >
+    <div class="card-body" :class="{ cardBack: !!card.isBack }">
+      <img
+        class="card-img"
+        v-show="!card.isBack"
+        :src="card.src"
+        :alt="card.alt"
+      />
+    </div>
+  </div>
+</template>
+<script>
+export default {
+  props: ["card", "show"],
+  name: "CardHero",
+};
+</script>
+<style lang="scss">
+#hero {
+  &.zener-card {
+    width: 200px !important;
+    height: 300px !important;
+    transition: 1s linear;
+  }
+
+  &.wrong {
+    border: 3px solid red !important;
+    box-shadow: 0 0 4rem red !important;
+  }
+}
+
+.cardBack {
+  background: radial-gradient(circle, #24246e, #06051f);
+}
+</style>
