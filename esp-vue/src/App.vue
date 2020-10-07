@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Manager msg="Coming soon..." />
+    <Manager @schemeListener="schemeListener" />
   </div>
 </template>
 
