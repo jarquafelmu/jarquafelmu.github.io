@@ -36,12 +36,18 @@ export default {
 <style lang="scss">
 #btn-row {
   .zener-card {
-    width: 70px;
-    height: 60px;
+    width: 80px;
+    height: 90px;
     cursor: pointer;
     opacity: 0.55;
     transition: 0.3s ease;
     // border-width: 2px !important;
+
+    .card-img {
+      padding-right: 30px !important;
+      // padding-left: 1px;
+      // width: 50px;
+    }
 
     &:hover {
       display: content-box;

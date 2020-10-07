@@ -19,6 +19,9 @@ export default {
   props: ["card", "show"],
   name: "CardHero",
 };
+
+// TODO: handle case where user is correct
+// TODO: handle case where user is wrong
 </script>
 <style lang="scss">
 #hero {
@@ -26,6 +29,10 @@ export default {
     width: 200px !important;
     height: 300px !important;
     transition: 1s linear;
+
+    .card-img {
+      padding-right: 35px;
+    }
   }
 
   &.wrong {
