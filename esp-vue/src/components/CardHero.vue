@@ -29,6 +29,10 @@ export default {
     width: 200px !important;
     height: 300px !important;
     transition: 1s linear;
+
+    .card-img {
+      padding-right: 35px;
+    }
   }
 
   &.wrong {
