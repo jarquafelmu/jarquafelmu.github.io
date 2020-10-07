@@ -1,7 +1,7 @@
 <template>
   <div
     id="hero"
-    class="card border rounded border-primary zener-card m-3 shadow shadow-lg wrong"
+    class="card border rounded border-primary zener-card m-3 shadow shadow-lg"
     @click="handle(index)"
   >
     <div class="card-body" :class="{ cardBack: !!card.isBack }">
@@ -31,6 +31,11 @@ export default {
   &.wrong {
     border: 3px solid red !important;
     box-shadow: 0 0 4rem red !important;
+  }
+
+  &.correct {
+    border: 3px solid green !important;
+    box-shadow: 0 0 4rem green !important;
   }
 }
 

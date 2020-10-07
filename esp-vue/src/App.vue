@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <Container msg="Coming soon..." />
+    <Manager msg="Coming soon..." />
   </div>
 </template>
 
 <script>
-import Container from "./components/Container.vue";
+import Manager from "./components/Manager.vue";
 
 export default {
   name: "App",
@@ -28,7 +28,7 @@ export default {
     };
   },
   components: {
-    Container,
+    Manager,
   },
 };
 </script>

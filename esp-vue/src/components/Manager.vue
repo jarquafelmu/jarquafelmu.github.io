@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <SchemeToggle @change="updateScheme"></SchemeToggle>
     <div class="row">
       <div class="col">
         <h1><GameTitle :data="GameTitle"></GameTitle>!</h1>
@@ -21,7 +22,7 @@
       </div>
     </div>
     <div class="row">
-      <ScoreDisplay class="col-auto mx-auto"></ScoreDisplay>
+      <ScoreDisplay :score="score" class="col-auto mx-auto"></ScoreDisplay>
     </div>
   </div>
 </template>
@@ -32,9 +33,10 @@ import CardHero from "./CardHero.vue";
 import Instructions from "./Instructions.vue";
 import SelectionRow from "./SelectionRow.vue";
 import ScoreDisplay from "./ScoreDisplay.vue";
+import SchemeToggle from "./SchemeToggle.vue";
 
 export default {
-  name: "Container",
+  name: "Manager",
   data() {
     return {
       GameTitle: "ESP Tester",
@@ -77,6 +79,11 @@ export default {
           isBack: true,
         },
       },
+      score: {
+        current: 0,
+        target: 0,
+        max: 0
+      }
     };
   },
   created: function() {
@@ -86,6 +93,7 @@ export default {
     GameTitle,
     CardHero,
     Instructions,
+    SchemeToggle,
     SelectionRow,
     ScoreDisplay,
   },
@@ -96,6 +104,9 @@ export default {
     setCardFace: function(card) {
       this.selectedCard = card;
     },
+    updateScheme: function(value) {
+      value;
+    }
   },
 };
 </script>
