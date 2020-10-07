@@ -35,6 +35,10 @@ import SelectionRow from "./SelectionRow.vue";
 import ScoreDisplay from "./ScoreDisplay.vue";
 import SchemeToggle from "./SchemeToggle.vue";
 
+// TODO: wire up game
+// TODO: scoring
+// TODO: show card
+// 
 export default {
   name: "Manager",
   data() {
