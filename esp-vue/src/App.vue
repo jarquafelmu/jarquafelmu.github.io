@@ -28,45 +28,71 @@ export default {
       darkThemePath: "css/darkster.css",
       devicePreferencesTags: {
         motion: "",
-        scheme: ""
-      }
+        scheme: "",
+      },
     };
   },
   components: {
     Manager,
   },
+  created: function () {
+    // TODO: get device settings
+    // TODO: get cookie settings
+    // TODO: apply settings 
+  },
+  mounted: function () {},
   methods: {
-    schemeListener: function() {
+    schemeListener: function () {
       // TODO: get scheme selector state from Manager
     },
-    applyDarkTheme: function() {
-      let file = document.createElement('link');
-      file.rel = 'stylesheet';
+    applyDarkTheme: function () {
+      let file = document.createElement("link");
+      file.rel = "stylesheet";
       file.href = this.darkThemePath;
       document.head.appendChild(file);
     },
-    removeDarkTheme: function() {
+    removeDarkTheme: function () {
       // TODO: figure out how to target a specific stylesheet for removal
+      /*
+      ex: $('link[rel=stylesheet][href*="mystyle"]').remove();
+
+      ex: for (var i = 0; i < document.styleSheets.length;
+      i++) { if (document.styleSheets[i].href.search(searchRegEx) != -1) {
+      document.styleSheets[i].disabled = true; } }
+      */
+      const styleSheet = document.querySelector(
+        `link[rel=stylesheet][href*="${this.darkThemePath}"]`
+      );
+
+      if (!styleSheet)
+        throw Error(
+          `expected reference to darkster stylesheet element but didn't get anything: ${styleSheet}`
+        );
+
+      // disable sheet first to remove its styling effects
+      styleSheet.disabled = true;
+      // remove the stylesheet
+      styleSheet.remove();
     },
-    storeSchemeStateInCookie: function() {
+    storeSchemeStateInCookie: function () {
       // TODO: store the scheme state in cookie
     },
-    getSchemeStateFromCookie: function() {
+    getSchemeStateFromCookie: function () {
       // TODO: get the scheme state from cookie
     },
-    storeMotionInCookie: function() {
+    storeMotionInCookie: function () {
       // TODO: store the user's vibration option from cookie
     },
-    getMotionFromCookie: function() {
+    getMotionFromCookie: function () {
       // TODO: get the user's motion option from cookie
     },
-    getDevicePreference: function(preference){
+    getDevicePreference: function (preference) {
       // TODO: get the preference from the user's device
     },
-    subscribeDevicePreference: function(event) {
+    subscribeDevicePreference: function (event) {
       // TODO: listen for changes with the given preference
-    }
-  }
+    },
+  },
 };
 </script>
 
