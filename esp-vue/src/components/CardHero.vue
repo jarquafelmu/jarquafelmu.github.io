@@ -19,6 +19,9 @@ export default {
   props: ["card", "show"],
   name: "CardHero",
 };
+
+// TODO: handle case where user is correct
+// TODO: handle case where user is wrong
 </script>
 <style lang="scss">
 #hero {
