@@ -29,22 +29,15 @@ export default {
       this.schemeCheckState = document.getElementById(
         `schemeToggleSwitch`
       ).checked;
-      console.log("schemeCheckState:", this.schemeCheckState);
       bus.$emit("schemeChoiceChanged", this.schemeCheckState);
-      console.log(`sent schemeChoiceChanged event`);
     },
   },
 };
 </script>
 
 <style lang="scss">
+// BUG: massive jumping around for switch when changing to darkmode
 #schemeToggleContainer {
-  // border: 1px solid red;
-  position: absolute;
-  right: 25%;
-  top: 3%;
-  font-size: 2rem;
-  opacity: 15%;
   transition: 0.18s ease;
 
   &:hover {
