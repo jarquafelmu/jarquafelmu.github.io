@@ -1,24 +1,40 @@
 <template>
   <div id="schemeToggleContainer" class="form-check form-switch sticky-top">
-    <input type="checkbox" class="form-check-input" id="schemeToggleSwitch" @change="schemeChangeHandler(this)">
-    <label id="schemeToggleLabel" for="schemeToggleSwitch" class="form-check-label">{{ currentScheme }}</label>
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="schemeToggleSwitch"
+      @change="schemeChangeHandler"
+    />
+    <label
+      id="schemeToggleLabel"
+      for="schemeToggleSwitch"
+      class="form-check-label"
+      >{{ currentScheme }}</label
+    >
   </div>
 </template>
 <script>
+import { bus } from "../main";
 export default {
-  name:"SchemeToggle",
+  name: "SchemeToggle",
   data() {
     return {
-      currentScheme: "Dark"
-    }
+      schemeCheckState: false,
+      currentScheme: "Dark",
+    };
   },
   methods: {
-    schemeChangeHandler: function(target) {
-      console.log(`'schemeChangeHandler' fired`)
-      this.$emit('schemeChangeHandler', target)
-    }
-  }
-}
+    schemeChangeHandler: function () {
+      this.schemeCheckState = document.querySelector(
+        `#schemeToggleSwitch`
+      ).checked;
+      console.log("schemeCheckState:", this.schemeCheckState);
+      bus.$emit("schemeChoiceChanged", this.schemeCheckState);
+      console.log(`sent schemeChoiceChanged event`);
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -42,7 +58,7 @@ export default {
       background-color: #343a40; // bootstraps' dark
     }
     &:not(:checked) {
-      background-color: #F9FFF0; // ivory
+      background-color: #f9fff0; // ivory
     }
   }
 
@@ -50,7 +66,8 @@ export default {
     user-select: none;
   }
 
-  #schemeToggleSwitch, #schemeToggleLabel {
+  #schemeToggleSwitch,
+  #schemeToggleLabel {
     &:hover {
       cursor: pointer;
     }
