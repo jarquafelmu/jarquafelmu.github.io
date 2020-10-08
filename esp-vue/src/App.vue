@@ -1,10 +1,11 @@
 <template>
   <div id="app">
-    <Manager @schemeListener="schemeListener" />
+    <Manager />
   </div>
 </template>
 
 <script>
+import { bus } from "./main";
 import Manager from "./components/Manager.vue";
 
 export default {
@@ -39,6 +40,10 @@ export default {
     // TODO: get device settings
     // TODO: get cookie settings
     // TODO: apply settings
+    // register bus with schemeChoiceChanged event
+    bus.$on("schemeChoiceChanged", (data) => {
+      console.log(`App saw scheme choice change. new choice is `, data);
+    });
   },
   mounted: function () {},
   methods: {
@@ -46,14 +51,14 @@ export default {
       // TODO: get scheme selector state from Manager
     },
     applyDarkTheme: function () {
-      console.log(`'applyDarkTheme' fired`)
+      console.log(`'applyDarkTheme' fired`);
       let file = document.createElement("link");
       file.rel = "stylesheet";
       file.href = this.darkThemePath;
       document.head.appendChild(file);
     },
     removeDarkTheme: function () {
-      console.log(`'removeDarkTheme' fired`)
+      console.log(`'removeDarkTheme' fired`);
       // TODO: figure out how to target a specific stylesheet for removal
       /*
       ex: $('link[rel=stylesheet][href*="mystyle"]').remove();
