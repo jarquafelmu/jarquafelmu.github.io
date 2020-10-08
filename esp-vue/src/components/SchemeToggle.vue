@@ -26,8 +26,8 @@ export default {
   },
   methods: {
     schemeChangeHandler: function () {
-      this.schemeCheckState = document.querySelector(
-        `#schemeToggleSwitch`
+      this.schemeCheckState = document.getElementById(
+        `schemeToggleSwitch`
       ).checked;
       console.log("schemeCheckState:", this.schemeCheckState);
       bus.$emit("schemeChoiceChanged", this.schemeCheckState);
