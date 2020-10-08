@@ -43,6 +43,9 @@ export default {
     // register bus with schemeChoiceChanged event
     bus.$on("schemeChoiceChanged", (data) => {
       console.log(`App saw scheme choice change. new choice is `, data);
+
+      if (data) this.applyDarkTheme();
+      else this.removeDarkTheme();
     });
   },
   mounted: function () {},
@@ -58,18 +61,10 @@ export default {
       document.head.appendChild(file);
     },
     removeDarkTheme: function () {
-      console.log(`'removeDarkTheme' fired`);
-      // TODO: figure out how to target a specific stylesheet for removal
-      /*
-      ex: $('link[rel=stylesheet][href*="mystyle"]').remove();
-
-      ex: for (var i = 0; i < document.styleSheets.length;
-      i++) { if (document.styleSheets[i].href.search(searchRegEx) != -1) {
-      document.styleSheets[i].disabled = true; } }
-      */
       const styleSheet = document.querySelector(
         `link[rel=stylesheet][href*="${this.darkThemePath}"]`
       );
+      console.log("stylesheet found", styleSheet);
 
       if (!styleSheet)
         throw Error(
