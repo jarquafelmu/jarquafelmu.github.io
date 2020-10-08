@@ -1,39 +1,42 @@
 <template>
   <div class="container">
-    <SchemeToggle @change="schemeChangeHandler"></SchemeToggle>
+    <SettingsBtn />
     <div class="row">
       <div class="col">
-        <h1><GameTitle :data="GameTitle"></GameTitle>!</h1>
+        <h1><GameTitle :data="GameTitle" />!</h1>
       </div>
     </div>
     <div class="row">
       <div class="col-auto mx-auto">
-        <CardHero :card="selectedCard"></CardHero>
+        <CardHero :card="selectedCard" />
       </div>
     </div>
     <div class="row mt-4">
       <div class="col">
-        <h5><Instructions></Instructions></h5>
+        <h5><Instructions /></h5>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <SelectionRow :cards="cards" @choice="choice"></SelectionRow>
+        <SelectionRow :cards="cards" @choice="choice" />
       </div>
     </div>
     <div class="row">
-      <ScoreDisplay :score="score" class="col-auto mx-auto"></ScoreDisplay>
+      <ScoreDisplay :score="score" class="col-auto mx-auto" />
     </div>
+    <SettingsModal />
   </div>
 </template>
 
 <script>
+// import { bus } from "../main";
 import GameTitle from "./GameTitle.vue";
 import CardHero from "./CardHero.vue";
 import Instructions from "./Instructions.vue";
 import SelectionRow from "./SelectionRow.vue";
 import ScoreDisplay from "./ScoreDisplay.vue";
-import SchemeToggle from "./SchemeToggle.vue";
+import SettingsModal from "./SettingsModal";
+import SettingsBtn from "./SettingsBtn.vue";
 
 // TODO: wire up game
 // TODO: scoring
@@ -86,33 +89,29 @@ export default {
       score: {
         current: 0,
         target: 0,
-        max: 0
-      }
+        max: 0,
+      },
     };
   },
-  created: function() {
+  created: function () {
     this.setCardFace(this.cards.back);
   },
   components: {
     GameTitle,
     CardHero,
     Instructions,
-    SchemeToggle,
+    SettingsBtn,
     SelectionRow,
+    SettingsModal,
     ScoreDisplay,
   },
   methods: {
-    choice: function(card) {
+    choice: function (card) {
       this.setCardFace(card);
     },
-    setCardFace: function(card) {
+    setCardFace: function (card) {
       this.selectedCard = card;
     },
-    schemeChangeHandler: function(target) {
-      console.log(`'schemeChangeHandler' fired`)
-      console.dir(target);
-      console.log(`is target checked`, target.checked);
-    }
   },
 };
 </script>
