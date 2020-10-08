@@ -17,6 +17,7 @@
   </div>
 </template>
 <script>
+// BUG: icons are shifted to the right in darkmode
 export default {
   props: ["cards"],
   name: "SelectionRow",
@@ -26,7 +27,7 @@ export default {
     };
   },
   methods: {
-    choice: function(index) {
+    choice: function (index) {
       this.$emit("choice", this.cards[index]);
     },
   },
