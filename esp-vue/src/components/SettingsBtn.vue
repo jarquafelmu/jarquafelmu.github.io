@@ -46,14 +46,9 @@ export default {
     };
   },
   methods: {
-    seeChange: function () {
-      this.active = !this.active;
-      console.log("in 'seeChange'");
-      // document.querySelector("#toggleSettingsModal").click();
-    },
     schemeChangeHandler: function () {
-      this.schemeCheckState = document.querySelector(
-        `#SettingsBtnSwitch`
+      this.schemeCheckState = document.getElementById(
+        `SettingsBtnSwitch`
       ).checked;
       console.log("schemeCheckState:", this.schemeCheckState);
       bus.$emit("schemeChoiceChanged", this.schemeCheckState);
@@ -61,11 +56,8 @@ export default {
     },
     handle: function () {
       console.log("in 'handle'");
-      bus.$emit("showModal", true);
-      console.log("sent 'showModal' broadcast");
-      // /* const target =  */ document.getElementById("toggleSettingsModal");
-      // console.dir(target);
-      // target.click();
+      bus.$emit("displayModal", true);
+      console.log("sent 'displayModal' broadcast");
     },
   },
 };
