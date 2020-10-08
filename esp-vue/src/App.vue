@@ -38,7 +38,7 @@ export default {
   created: function () {
     // TODO: get device settings
     // TODO: get cookie settings
-    // TODO: apply settings 
+    // TODO: apply settings
   },
   mounted: function () {},
   methods: {
@@ -46,12 +46,14 @@ export default {
       // TODO: get scheme selector state from Manager
     },
     applyDarkTheme: function () {
+      console.log(`'applyDarkTheme' fired`)
       let file = document.createElement("link");
       file.rel = "stylesheet";
       file.href = this.darkThemePath;
       document.head.appendChild(file);
     },
     removeDarkTheme: function () {
+      console.log(`'removeDarkTheme' fired`)
       // TODO: figure out how to target a specific stylesheet for removal
       /*
       ex: $('link[rel=stylesheet][href*="mystyle"]').remove();
@@ -86,10 +88,10 @@ export default {
     getMotionFromCookie: function () {
       // TODO: get the user's motion option from cookie
     },
-    getDevicePreference: function (preference) {
+    getDevicePreference: function (/* preference */) {
       // TODO: get the preference from the user's device
     },
-    subscribeDevicePreference: function (event) {
+    subscribeDevicePreference: function (/* event */) {
       // TODO: listen for changes with the given preference
     },
   },
