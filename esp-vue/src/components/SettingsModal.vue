@@ -32,7 +32,6 @@
 <script>
 import { bus, bootstrap } from "../main";
 import SchemeToggle from "./SchemeToggle";
-// import bootstrap from "~Bootstrap";
 
 export default {
   name: "SettingsModal",
@@ -41,11 +40,9 @@ export default {
       modal: null,
     };
   },
-  created: function () {
-    this.modal = new bootstrap.Modal(
-      document.getElementById("SettingsModalId")
-    );
-    console.dir(`stored modal:`, this.modal);
+  mounted() {
+    const modalElement = document.getElementById("SettingsModalId");
+    this.modal = new bootstrap.Modal(modalElement);
     this.registerShowModal();
   },
   components: {
@@ -53,17 +50,16 @@ export default {
   },
   methods: {
     toggleModal: function () {
-      // document.querySelector("#toggleSettingsModal").click();
+      bus.$emit("displayModal", false);
     },
     registerShowModal: function () {
       const that = this;
-      bus.$on("showModal", () => {
-        console.log("request received to show modal");
-        that.modal.show();
+      bus.$on("displayModal", (shouldShow) => {
+        if (shouldShow) that.modal.show();
+        else that.modal.hide();
       });
     },
   },
 };
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>
