@@ -1,6 +1,6 @@
 <template>
   <div id="schemeToggleContainer" class="form-check form-switch sticky-top">
-    <input type="checkbox" class="form-check-input" id="schemeToggleSwitch" @change="updateScheme(this)">
+    <input type="checkbox" class="form-check-input" id="schemeToggleSwitch" @change="schemeChangeHandler(this)">
     <label id="schemeToggleLabel" for="schemeToggleSwitch" class="form-check-label">{{ currentScheme }}</label>
   </div>
 </template>
@@ -13,8 +13,9 @@ export default {
     }
   },
   methods: {
-    updateScheme: function(target) {
-      this.$emit('updateScheme', target.checked)
+    schemeChangeHandler: function(target) {
+      console.log(`'schemeChangeHandler' fired`)
+      this.$emit('schemeChangeHandler', target)
     }
   }
 }

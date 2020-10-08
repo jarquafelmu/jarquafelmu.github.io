@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <SchemeToggle @change="updateScheme"></SchemeToggle>
+    <SchemeToggle @change="schemeChangeHandler"></SchemeToggle>
     <div class="row">
       <div class="col">
         <h1><GameTitle :data="GameTitle"></GameTitle>!</h1>
@@ -38,7 +38,7 @@ import SchemeToggle from "./SchemeToggle.vue";
 // TODO: wire up game
 // TODO: scoring
 // TODO: show card
-// 
+//
 export default {
   name: "Manager",
   data() {
@@ -108,8 +108,10 @@ export default {
     setCardFace: function(card) {
       this.selectedCard = card;
     },
-    updateScheme: function(value) {
-      value;
+    schemeChangeHandler: function(target) {
+      console.log(`'schemeChangeHandler' fired`)
+      console.dir(target);
+      console.log(`is target checked`, target.checked);
     }
   },
 };
