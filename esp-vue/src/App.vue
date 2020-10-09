@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import { bus } from './main';
-import Manager from './components/Manager.vue';
+import { bus } from "./main";
+import Manager from "./components/Manager.vue";
 
 export default {
   name: `App`,
@@ -15,19 +15,17 @@ export default {
   },
   data() {
     return {
-      colorScheme: {
-        enableDarkMode: false,
+      appSettings: {
+        scheme: false,
+        motion: false,
       },
-      devicePreferences: {
-        preferDarkMode: null,
-        preferMotion: null,
-      },
+      cookieId: `espAppUserSettings`,
       cookieSettings: {
-        preferDarkMode: null,
-        preferMotion: null,
+        scheme: null,
+        motion: null,
       },
       darkThemePath: `css/dark.css`,
-      devicePreferencesTags: {
+      devicePreferences: {
         motion: `(prefers-reduced-motion: reduce)`,
         scheme: `(prefers-color-scheme: dark)`,
       },
@@ -37,27 +35,56 @@ export default {
     Manager,
   },
   created: function () {
-    // TODO: get device settings
-    // TODO: get cookie settings
-    // TODO: apply settings
-    // register bus with schemeChoiceChanged event
-    bus.$on(`schemeChoiceChanged`, (data) => {
-      console.log(`App saw scheme choice change. new choice is `, data);
-
-      if (data) this.applyDarkTheme();
-      else this.removeDarkTheme();
-    });
-
-    this.getDevicePreference(this.devicePreferencesTags.motion);
-    this.getDevicePreference(this.devicePreferencesTags.scheme);
+    // remove any listener
+    bus.$off();
   },
-  mounted: function () {},
+  mounted() {
+    this.prepare();
+    this.registerListeners();
+    this.react();
+  },
   methods: {
-    schemeListener: function () {
-      // TODO: get scheme selector state from Manager
+    prepare: function () {
+      // get scheme and motion states from cookie
+      this.getStateFromCookie();
+
+      // if this is null then our cookie didn't have anything, so check the device preference
+      this.appSettings.scheme =
+        this.cookieSettings.scheme !== null
+          ? this.cookieSettings.scheme
+          : this.getDevicePreference(this.devicePreferences.scheme);
+
+      this.appSettings.motion =
+        this.cookieSettings.motion !== null
+          ? this.cookieSettings.motion
+          : this.getDevicePreference(this.devicePreferences.motion);
+    },
+    registerListeners: function () {
+      bus.$on(`requestSettings`, () => {
+        // settings modal requests current state
+        // sends current state
+        bus.$emit(`setSettingsModal`, this.appSettings);
+      });
+
+      bus.$on(`updateSettings`, (data) => {
+        // gets data from settings modal
+        this.appSettings.motion = data.motion;
+        this.appSettings.scheme = data.scheme;
+        this.storeStateInCookie();
+        this.react();
+      });
+    },
+    react: function () {
+      if (this.appSettings.scheme) {
+        console.log(`applying dark theme`);
+        this.applyDarkTheme();
+      } else {
+        console.log(`removing dark theme`);
+        this.removeDarkTheme();
+      }
     },
     applyDarkTheme: function () {
-      console.log(`'applyDarkTheme' fired`);
+      // console.log(`'applyDarkTheme' fired`);
       let file = document.createElement(`link`);
       file.rel = `stylesheet`;
       file.href = this.darkThemePath;
@@ -68,35 +95,54 @@ export default {
         `link[rel=stylesheet][href*="${this.darkThemePath}"]`
       );
 
-      if (!styleSheet)
-        throw Error(
-          `expected reference to darkster stylesheet element but didn't get anything: ${styleSheet}`
-        );
+      if (!styleSheet) return;
 
       // disable sheet first to remove its styling effects
       styleSheet.disabled = true;
       // remove the stylesheet
       styleSheet.remove();
     },
-    storeSchemeStateInCookie: function () {
-      // TODO: store the scheme state in cookie
+    storeStateInCookie: function (daysToLive = 10) {
+      // console.info(`storing cookie`);
+      // console.log(`cookie name`, this.cookieSettings.identifier);
+      // encode value in order to escape semicolons, commas, and whitespace
+      let strJson = JSON.stringify(this.appSettings);
+      // console.log(`strJson`, strJson);
+      let cookie = `${this.cookieId}=${encodeURIComponent(strJson)}`;
+      if (typeof daysToLive === `number`) {
+        /* Sets the max-age attribute so that the cookie expires after the
+        specified number of days */
+        cookie = `${cookie}; max-age=${daysToLive * 24 * 60 * 60}`;
+      }
+      cookie = `${cookie}; samesite=lax`;
+      // console.info(`packaged cookie`, cookie);
+      document.cookie = cookie;
     },
-    getSchemeStateFromCookie: function () {
-      // TODO: get the scheme state from cookie
-    },
-    storeMotionInCookie: function () {
-      // TODO: store the user's vibration option from cookie
-    },
-    getMotionFromCookie: function () {
-      // TODO: get the user's motion option from cookie
+    getStateFromCookie: function () {
+      // console.info(`getting cookie`);
+      // split cookie string and get all individual name=value pairs in an array
+      let cookieArr = document.cookie.split(`;`);
+
+      // loop through the array elements
+      cookieArr.forEach((cookie) => {
+        let cookiePair = cookie.split(`=`);
+
+        /* remove whitespace from cookie name */
+        if (this.cookieId === cookiePair[0].trim()) {
+          // decode the cookie value and return
+          let results = decodeURIComponent(cookiePair[1]);
+          results = JSON.parse(results);
+          this.cookieSettings = results;
+          return true;
+        }
+      });
+
+      // didn't find our cookie
+      return false;
     },
     getDevicePreference: function (preference) {
-      // TODO: get the preference from the user's device
       const mediaQuery = window.matchMedia(preference);
       return mediaQuery.matches;
-    },
-    subscribeDevicePreference: function (/* event */) {
-      // TODO: listen for changes with the given preference
     },
   },
 };
