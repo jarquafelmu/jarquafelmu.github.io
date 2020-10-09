@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" @click="toggleModal">
+          <button type="button" class="btn btn-primary" @click="saveSettings">
             Save
           </button>
         </div>
@@ -43,20 +43,23 @@ export default {
   mounted() {
     const modalElement = document.getElementById(`SettingsModalId`);
     this.modal = new bootstrap.Modal(modalElement);
-    this.registerShowModal();
+    this.registerListeners();
   },
   components: {
     SchemeToggle,
   },
   methods: {
-    toggleModal: function () {
+    saveSettings: function () {
+      bus.$emit(`saveSettings`);
       bus.$emit(`displayModal`, false);
     },
-    registerShowModal: function () {
-      const that = this;
+    registerListeners: function () {
       bus.$on(`displayModal`, (shouldShow) => {
-        if (shouldShow) that.modal.show();
-        else that.modal.hide();
+        // show modal
+        if (shouldShow) {
+          bus.$emit(`requestSettings`);
+          this.modal.show();
+        } else this.modal.hide();
       });
     },
   },
