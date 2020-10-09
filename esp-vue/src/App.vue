@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import { bus } from "./main";
-import Manager from "./components/Manager.vue";
+import { bus } from './main';
+import Manager from './components/Manager.vue';
 
 export default {
   name: `App`,
