@@ -26,10 +26,10 @@ export default {
         scheme: null,
         motion: null,
       },
-      darkThemePath: "css/darkster.css",
+      darkThemePath: "css/dark.css",
       devicePreferencesTags: {
-        motion: "",
-        scheme: "",
+        motion: "(prefers-reduced-motion: reduce)'",
+        scheme: "(prefers-color-scheme: dark)",
       },
     };
   },
@@ -64,7 +64,6 @@ export default {
       const styleSheet = document.querySelector(
         `link[rel=stylesheet][href*="${this.darkThemePath}"]`
       );
-      console.log("stylesheet found", styleSheet);
 
       if (!styleSheet)
         throw Error(
