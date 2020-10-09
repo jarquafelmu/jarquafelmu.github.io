@@ -30,13 +30,13 @@
 
 <script>
 // import { bus } from '../main';
-import GameTitle from './GameTitle.vue';
-import CardHero from './CardHero.vue';
-import Instructions from './Instructions.vue';
-import SelectionRow from './SelectionRow.vue';
-import ScoreDisplay from './ScoreDisplay.vue';
-import SettingsModal from './SettingsModal';
-import SettingsBtn from './SettingsBtn.vue';
+import GameTitle from "./GameTitle.vue";
+import CardHero from "./CardHero.vue";
+import Instructions from "./Instructions.vue";
+import SelectionRow from "./SelectionRow.vue";
+import ScoreDisplay from "./ScoreDisplay.vue";
+import SettingsModal from "./SettingsModal";
+import SettingsBtn from "./SettingsBtn.vue";
 
 // TODO: wire up game
 // TODO: scoring
@@ -88,8 +88,8 @@ export default {
       },
       score: {
         current: 0,
-        target: 0,
-        max: 0,
+        target: 5,
+        max: 10,
       },
     };
   },
