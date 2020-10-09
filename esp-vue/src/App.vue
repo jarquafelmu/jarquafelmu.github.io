@@ -9,9 +9,9 @@ import { bus } from "./main";
 import Manager from "./components/Manager.vue";
 
 export default {
-  name: "App",
+  name: `App`,
   meta: {
-    title: "ESP",
+    title: `ESP`,
   },
   data() {
     return {
@@ -19,17 +19,17 @@ export default {
         enableDarkMode: false,
       },
       devicePreferences: {
-        scheme: null,
-        motion: null,
+        preferDarkMode: null,
+        preferMotion: null,
       },
       cookieSettings: {
-        scheme: null,
-        motion: null,
+        preferDarkMode: null,
+        preferMotion: null,
       },
-      darkThemePath: "css/dark.css",
+      darkThemePath: `css/dark.css`,
       devicePreferencesTags: {
-        motion: "(prefers-reduced-motion: reduce)'",
-        scheme: "(prefers-color-scheme: dark)",
+        motion: `(prefers-reduced-motion: reduce)`,
+        scheme: `(prefers-color-scheme: dark)`,
       },
     };
   },
@@ -41,12 +41,15 @@ export default {
     // TODO: get cookie settings
     // TODO: apply settings
     // register bus with schemeChoiceChanged event
-    bus.$on("schemeChoiceChanged", (data) => {
+    bus.$on(`schemeChoiceChanged`, (data) => {
       console.log(`App saw scheme choice change. new choice is `, data);
 
       if (data) this.applyDarkTheme();
       else this.removeDarkTheme();
     });
+
+    this.getDevicePreference(this.devicePreferencesTags.motion);
+    this.getDevicePreference(this.devicePreferencesTags.scheme);
   },
   mounted: function () {},
   methods: {
@@ -55,8 +58,8 @@ export default {
     },
     applyDarkTheme: function () {
       console.log(`'applyDarkTheme' fired`);
-      let file = document.createElement("link");
-      file.rel = "stylesheet";
+      let file = document.createElement(`link`);
+      file.rel = `stylesheet`;
       file.href = this.darkThemePath;
       document.head.appendChild(file);
     },
@@ -87,8 +90,10 @@ export default {
     getMotionFromCookie: function () {
       // TODO: get the user's motion option from cookie
     },
-    getDevicePreference: function (/* preference */) {
+    getDevicePreference: function (preference) {
       // TODO: get the preference from the user's device
+      const mediaQuery = window.matchMedia(preference);
+      return mediaQuery.matches;
     },
     subscribeDevicePreference: function (/* event */) {
       // TODO: listen for changes with the given preference

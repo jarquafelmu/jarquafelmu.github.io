@@ -5,10 +5,10 @@
 </template>
 <script>
 export default {
-  name: "Instructions",
+  name: `Instructions`,
   data() {
     return {
-      msg: "Click the symbol below which you believe is hidden above",
+      msg: `Click the symbol below which you believe is hidden above`,
     };
   },
 };

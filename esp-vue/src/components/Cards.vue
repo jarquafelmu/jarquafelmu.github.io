@@ -29,7 +29,7 @@
 </template>
 <script>
 export default {
-  props: ["cards"],
-  name: "Cards",
+  props: [`cards`],
+  name: `Cards`,
 };
 </script>

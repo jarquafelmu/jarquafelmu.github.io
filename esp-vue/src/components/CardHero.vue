@@ -16,8 +16,8 @@
 </template>
 <script>
 export default {
-  props: ["card", "show"],
-  name: "CardHero",
+  props: [`card`, `show`],
+  name: `CardHero`,
 };
 
 // TODO: handle case where user is correct

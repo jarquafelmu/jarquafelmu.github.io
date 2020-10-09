@@ -29,60 +29,60 @@
 </template>
 
 <script>
-// import { bus } from "../main";
-import GameTitle from "./GameTitle.vue";
-import CardHero from "./CardHero.vue";
-import Instructions from "./Instructions.vue";
-import SelectionRow from "./SelectionRow.vue";
-import ScoreDisplay from "./ScoreDisplay.vue";
-import SettingsModal from "./SettingsModal";
-import SettingsBtn from "./SettingsBtn.vue";
+// import { bus } from '../main';
+import GameTitle from './GameTitle.vue';
+import CardHero from './CardHero.vue';
+import Instructions from './Instructions.vue';
+import SelectionRow from './SelectionRow.vue';
+import ScoreDisplay from './ScoreDisplay.vue';
+import SettingsModal from './SettingsModal';
+import SettingsBtn from './SettingsBtn.vue';
 
 // TODO: wire up game
 // TODO: scoring
 // TODO: show card
 //
 export default {
-  name: "Manager",
+  name: `Manager`,
   data() {
     return {
-      GameTitle: "ESP Tester",
+      GameTitle: `ESP Tester`,
       selectedCard: null,
       cards: {
         plus: {
           id: 0,
-          name: "plus",
-          src: "/img/cards/plus_stroke.svg",
-          alt: "a plus card",
+          name: `plus`,
+          src: `/img/cards/plus_stroke.svg`,
+          alt: `a plus card`,
         },
         circle: {
           id: 1,
-          name: "circle",
-          src: "/img/cards/circle_stroke.svg",
-          alt: "a circle card",
+          name: `circle`,
+          src: `/img/cards/circle_stroke.svg`,
+          alt: `a circle card`,
         },
         square: {
           id: 2,
-          name: "square",
-          src: "/img/cards/square_stroke.svg",
-          alt: "a square card",
+          name: `square`,
+          src: `/img/cards/square_stroke.svg`,
+          alt: `a square card`,
         },
         star: {
           id: 3,
-          name: "star",
-          src: "/img/cards/star_stroke.svg",
-          alt: "a star card",
+          name: `star`,
+          src: `/img/cards/star_stroke.svg`,
+          alt: `a star card`,
         },
         waves: {
           id: 4,
-          name: "waves",
-          src: "/img/cards/waves_stroke.svg",
-          alt: "a waves card",
+          name: `waves`,
+          src: `/img/cards/waves_stroke.svg`,
+          alt: `a waves card`,
         },
         back: {
           id: 5,
-          name: "back",
-          alt: "the back of the card",
+          name: `back`,
+          alt: `the back of the card`,
           isBack: true,
         },
       },

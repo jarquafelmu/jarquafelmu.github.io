@@ -5,8 +5,8 @@
 </template>
 <script>
 export default {
-  props: ["score"],
-  name: "ScoreDisplay",
+  props: [`score`],
+  name: `ScoreDisplay`,
 };
 </script>
 
