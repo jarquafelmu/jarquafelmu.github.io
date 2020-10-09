@@ -1,17 +1,27 @@
 <template>
-  <div id="schemeToggleContainer" class="form-check form-switch sticky-top">
-    <input
-      type="checkbox"
-      class="form-check-input"
-      id="schemeToggleSwitch"
-      @change="schemeChangeHandler"
-    />
-    <label
-      id="schemeToggleLabel"
-      for="schemeToggleSwitch"
-      class="form-check-label"
-      >{{ currentScheme }}</label
-    >
+  <div>
+    <div class="form-check form-switch">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="schemeToggleSwitch"
+        v-model="scheme"
+      />
+      <label for="schemeToggleSwitch" class="form-check-label"
+        >Use Dark mode?</label
+      >
+    </div>
+    <div class="form-check form-switch">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="motionToggleSwitch"
+        v-model="motion"
+      />
+      <label for="motionToggleSwitch" class="form-check-label"
+        >Suppress motion?</label
+      >
+    </div>
   </div>
 </template>
 <script>
@@ -20,50 +30,32 @@ export default {
   name: `SchemeToggle`,
   data() {
     return {
-      schemeCheckState: false,
-      currentScheme: `Dark`,
+      scheme: false,
+      motion: false,
     };
   },
+  created: function () {
+    this.registerListeners();
+  },
   methods: {
-    schemeChangeHandler: function () {
-      this.schemeCheckState = document.getElementById(
-        `schemeToggleSwitch`
-      ).checked;
-      bus.$emit(`schemeChoiceChanged`, this.schemeCheckState);
+    registerListeners: function () {
+      bus.$on(`saveSettings`, () => {
+        // listens for a request for the settings state
+        bus.$emit(`updateSettings`, {
+          // sends the settings state
+          motion: this.motion,
+          scheme: this.scheme,
+        });
+      });
+      bus.$on(`setSettingsModal`, (data) => {
+        // listens for an event to set the state
+        this.motion = data.motion;
+        this.scheme = data.scheme;
+      });
     },
   },
 };
 </script>
 
 <style lang="scss">
-// BUG: massive jumping around for switch when changing to darkmode
-#schemeToggleContainer {
-  transition: 0.18s ease;
-
-  &:hover {
-    opacity: 1;
-  }
-
-  #schemeToggleSwitch {
-    transition: 0.18s ease-in;
-
-    &:checked {
-      background-color: #343a40; // bootstraps' dark
-    }
-    &:not(:checked) {
-      background-color: #f9fff0; // ivory
-    }
-  }
-
-  #schemeToggleLabel {
-    user-select: none;
-  }
-
-  #schemeToggleSwitch,
-  #schemeToggleLabel {
-    &:hover {
-      cursor: pointer;
-    }
-  }
-}
 </style>
