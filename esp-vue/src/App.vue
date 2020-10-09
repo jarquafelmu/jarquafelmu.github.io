@@ -84,7 +84,6 @@ export default {
       }
     },
     applyDarkTheme: function () {
-      // console.log(`'applyDarkTheme' fired`);
       let file = document.createElement(`link`);
       file.rel = `stylesheet`;
       file.href = this.darkThemePath;
@@ -103,8 +102,6 @@ export default {
       styleSheet.remove();
     },
     storeStateInCookie: function (daysToLive = 10) {
-      // console.info(`storing cookie`);
-      // console.log(`cookie name`, this.cookieSettings.identifier);
       // encode value in order to escape semicolons, commas, and whitespace
       let strJson = JSON.stringify(this.appSettings);
       // console.log(`strJson`, strJson);
@@ -115,11 +112,9 @@ export default {
         cookie = `${cookie}; max-age=${daysToLive * 24 * 60 * 60}`;
       }
       cookie = `${cookie}; samesite=lax`;
-      // console.info(`packaged cookie`, cookie);
       document.cookie = cookie;
     },
     getStateFromCookie: function () {
-      // console.info(`getting cookie`);
       // split cookie string and get all individual name=value pairs in an array
       let cookieArr = document.cookie.split(`;`);
 
@@ -154,7 +149,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  /* color: #2c3e50; */
   margin-top: 60px;
 }
 </style>
