@@ -18,7 +18,7 @@
     </div>
     <div class="row">
       <div class="col">
-        <SelectionRow :cards="cards" @choice="choice" />
+        <SelectionRow :cards="cards" />
       </div>
     </div>
     <div class="row">
@@ -29,7 +29,8 @@
 </template>
 
 <script>
-// import { bus } from '../main';
+import { bus } from "../main";
+import { random } from "../js/utils";
 import GameTitle from "./GameTitle.vue";
 import CardHero from "./CardHero.vue";
 import Instructions from "./Instructions.vue";
@@ -46,6 +47,7 @@ export default {
   name: `Manager`,
   data() {
     return {
+      timeOutAmt: 3000,
       GameTitle: `ESP Tester`,
       selectedCard: null,
       cards: {
@@ -87,7 +89,8 @@ export default {
         },
       },
       score: {
-        current: 0,
+        correct: 0,
+        total: 0,
         target: 5,
         max: 10,
       },
@@ -95,6 +98,7 @@ export default {
   },
   created: function () {
     this.setCardFace(this.cards.back);
+    this.registerListeners();
   },
   components: {
     GameTitle,
@@ -106,8 +110,31 @@ export default {
     ScoreDisplay,
   },
   methods: {
-    choice: function (card) {
-      this.setCardFace(card);
+    registerListeners: function () {
+      bus.$on(`choice`, (data) => {
+        // fires when the user clicks on a card in the bottom row
+        // this.setCardFace(data);
+        bus.$emit(`validateChoice`, data);
+      });
+
+      bus.$on(`validateChoice`, (data) => {
+        const chosenCard = this.cards[random(0, this.cards.length)];
+
+        if (chosenCard.id === data.id) {
+          bus.$emit(`choiceCorrect`);
+          this.score.correct++;
+        } else {
+          bus.$emit(`choiceWrong`);
+        }
+        this.score.total++;
+
+        bus.$emit(`scoreUpdate`, this.score);
+        bus.$emit(`pause`);
+        setTimeout(() => {
+          this.setCardFace(this.cards.back);
+          bus.$emit(`unpause`);
+        }, this.timeOutAmt);
+      });
     },
     setCardFace: function (card) {
       this.selectedCard = card;

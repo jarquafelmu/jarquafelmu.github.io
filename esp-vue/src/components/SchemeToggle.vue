@@ -34,6 +34,7 @@ export default {
       motion: false,
     };
   },
+  props: [`card`],
   created: function () {
     this.registerListeners();
   },

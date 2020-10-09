@@ -5,6 +5,7 @@
   >
     <div
       class="card border rounded border-primary zener-card m-1 shadow"
+      :class="{ pause: pause }"
       v-for="(card, index) in cards"
       :key="card.id"
       v-show="!card.isBack"
@@ -17,17 +18,23 @@
   </div>
 </template>
 <script>
-// BUG: icons are shifted to the right in darkmode
+import { bus } from "../main";
 export default {
   props: [`cards`],
   name: `SelectionRow`,
   data() {
     return {
       hover: false,
+      pause: false,
     };
+  },
+  created: function () {
+    bus.$on(`pause`, () => (this.pause = true));
+    bus.$on(`unpause`, () => (this.pause = false));
   },
   methods: {
     choice: function (index) {
+      if (this.pause) return;
       this.$emit(`choice`, this.cards[index]);
     },
   },
@@ -42,18 +49,21 @@ export default {
     cursor: pointer;
     opacity: 0.55;
     transition: 0.3s ease;
-    // border-width: 2px !important;
 
     .card-img {
       padding-right: 30px !important;
-      // padding-left: 1px;
-      // width: 50px;
     }
 
     &:hover {
       display: content-box;
       background-color: rgb(100, 100, 100, 0.3);
       opacity: 1;
+    }
+  }
+
+  .pause {
+    &:hover {
+      cursor: wait;
     }
   }
 }
