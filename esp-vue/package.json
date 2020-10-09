@@ -38,12 +38,7 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {
-      "quotes": [
-        "error",
-        "backtick"
-      ]
-    }
+    "rules": {}
   },
   "browserslist": [
     "> 1%",
