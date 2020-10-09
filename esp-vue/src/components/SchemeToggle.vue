@@ -17,11 +17,11 @@
 <script>
 import { bus } from "../main";
 export default {
-  name: "SchemeToggle",
+  name: `SchemeToggle`,
   data() {
     return {
       schemeCheckState: false,
-      currentScheme: "Dark",
+      currentScheme: `Dark`,
     };
   },
   methods: {
@@ -29,7 +29,7 @@ export default {
       this.schemeCheckState = document.getElementById(
         `schemeToggleSwitch`
       ).checked;
-      bus.$emit("schemeChoiceChanged", this.schemeCheckState);
+      bus.$emit(`schemeChoiceChanged`, this.schemeCheckState);
     },
   },
 };

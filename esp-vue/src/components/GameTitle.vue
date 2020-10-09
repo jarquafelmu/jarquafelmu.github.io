@@ -3,7 +3,7 @@
 </template>
 <script>
 export default {
-  props: ["data"],
-  name: "GameTitle",
+  props: [`data`],
+  name: `GameTitle`,
 };
 </script>

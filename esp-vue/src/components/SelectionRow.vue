@@ -19,8 +19,8 @@
 <script>
 // BUG: icons are shifted to the right in darkmode
 export default {
-  props: ["cards"],
-  name: "SelectionRow",
+  props: [`cards`],
+  name: `SelectionRow`,
   data() {
     return {
       hover: false,
@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     choice: function (index) {
-      this.$emit("choice", this.cards[index]);
+      this.$emit(`choice`, this.cards[index]);
     },
   },
 };

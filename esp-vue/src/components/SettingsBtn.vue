@@ -34,14 +34,14 @@
 </template>
 
 <script>
-import { bus } from "../main";
+import { bus } from '../main';
 export default {
-  name: "SettingsBtn",
+  name: `SettingsBtn`,
   data() {
     return {
       schemeCheckState: false,
-      currentScheme: "Dark",
-      title: "Settings",
+      currentScheme: `Dark`,
+      title: `Settings`,
       active: false,
     };
   },
@@ -50,14 +50,14 @@ export default {
       this.schemeCheckState = document.getElementById(
         `SettingsBtnSwitch`
       ).checked;
-      console.log("schemeCheckState:", this.schemeCheckState);
-      bus.$emit("schemeChoiceChanged", this.schemeCheckState);
+      console.log(`schemeCheckState:`, this.schemeCheckState);
+      bus.$emit(`schemeChoiceChanged`, this.schemeCheckState);
       console.log(`sent schemeChoiceChanged event`);
     },
     handle: function () {
-      console.log("in 'handle'");
-      bus.$emit("displayModal", true);
-      console.log("sent 'displayModal' broadcast");
+      console.log(`in 'handle'`);
+      bus.$emit(`displayModal`, true);
+      console.log(`sent 'displayModal' broadcast`);
     },
   },
 };

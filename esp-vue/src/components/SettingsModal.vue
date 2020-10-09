@@ -34,14 +34,14 @@ import { bus, bootstrap } from "../main";
 import SchemeToggle from "./SchemeToggle";
 
 export default {
-  name: "SettingsModal",
+  name: `SettingsModal`,
   data() {
     return {
       modal: null,
     };
   },
   mounted() {
-    const modalElement = document.getElementById("SettingsModalId");
+    const modalElement = document.getElementById(`SettingsModalId`);
     this.modal = new bootstrap.Modal(modalElement);
     this.registerShowModal();
   },
@@ -50,11 +50,11 @@ export default {
   },
   methods: {
     toggleModal: function () {
-      bus.$emit("displayModal", false);
+      bus.$emit(`displayModal`, false);
     },
     registerShowModal: function () {
       const that = this;
-      bus.$on("displayModal", (shouldShow) => {
+      bus.$on(`displayModal`, (shouldShow) => {
         if (shouldShow) that.modal.show();
         else that.modal.hide();
       });
