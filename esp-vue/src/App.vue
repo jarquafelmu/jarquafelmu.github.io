@@ -29,6 +29,12 @@ export default {
         motion: `(prefers-reduced-motion: reduce)`,
         scheme: `(prefers-color-scheme: dark)`,
       },
+      shakeClassName: `my-custom-shake`,
+      body: null,
+      gameReadyCheckQualifiers: {
+        sound: false,
+        paused: false,
+      },
     };
   },
   components: {
@@ -37,6 +43,7 @@ export default {
   created: function () {
     // remove any listener
     bus.$off();
+    this.body = document.getElementsByTagName(`BODY`)[0];
   },
   mounted() {
     this.prepare();
@@ -44,6 +51,9 @@ export default {
     this.react();
   },
   methods: {
+    /**
+     * Sets up the app settings for the game
+     */
     prepare: function () {
       // get scheme and motion states from cookie
       this.getStateFromCookie();
@@ -59,6 +69,9 @@ export default {
           ? this.cookieSettings.motion
           : this.getDevicePreference(this.devicePreferences.motion);
     },
+    /**
+     * Registers event listeners
+     */
     registerListeners: function () {
       bus.$on(`requestSettings`, () => {
         // settings modal requests current state
@@ -73,22 +86,51 @@ export default {
         this.storeStateInCookie();
         this.react();
       });
+
+      bus.$on(`shake`, () => {
+        // if appsettings motion is true then exit
+        // because the user has chosen to supress motion
+        if (this.appSettings.motion) return;
+        this.body.classList.add(this.shakeClassName);
+      });
+      document.addEventListener(`animationend`, () => {
+        this.body.classList.remove(this.shakeClassName);
+      });
+
+      bus.$on(`gameReadyCheck`, () => {
+        bus.$on(`gameReadyResponse`, this.gameReadyCheck());
+      });
+
+      bus.$on(`pause`, () => (this.gameReadyCheckQualifiers.paused = true));
+      bus.$on(`unpause`, () => (this.gameReadyCheckQualifiers.paused = false));
+
+      bus.$on(
+        `soundReadyStatus`,
+        (status) => (this.gameReadyCheckQualifiers.sound = status)
+      );
     },
+    /**
+     * Applies or removes the dark theme
+     */
     react: function () {
       if (this.appSettings.scheme) {
-        console.log(`applying dark theme`);
         this.applyDarkTheme();
       } else {
-        console.log(`removing dark theme`);
         this.removeDarkTheme();
       }
     },
+    /**
+     * Adds a dark theme stylesheet to the DOM
+     */
     applyDarkTheme: function () {
       let file = document.createElement(`link`);
       file.rel = `stylesheet`;
       file.href = this.darkThemePath;
       document.head.appendChild(file);
     },
+    /**
+     * Removes the dark theme stylesheet from the DOM
+     */
     removeDarkTheme: function () {
       const styleSheet = document.querySelector(
         `link[rel=stylesheet][href*="${this.darkThemePath}"]`
@@ -101,6 +143,9 @@ export default {
       // remove the stylesheet
       styleSheet.remove();
     },
+    /**
+     * Creates a cookie with the desired information
+     */
     storeStateInCookie: function (daysToLive = 10) {
       // encode value in order to escape semicolons, commas, and whitespace
       let strJson = JSON.stringify(this.appSettings);
@@ -114,6 +159,9 @@ export default {
       cookie = `${cookie}; samesite=lax`;
       document.cookie = cookie;
     },
+    /**
+     * Tries to retrieve a cookie with the desired information
+     */
     getStateFromCookie: function () {
       // split cookie string and get all individual name=value pairs in an array
       let cookieArr = document.cookie.split(`;`);
@@ -135,9 +183,18 @@ export default {
       // didn't find our cookie
       return false;
     },
+    /**
+     * For the passed in preferenc, determine if the user device has that enabled
+     */
     getDevicePreference: function (preference) {
       const mediaQuery = window.matchMedia(preference);
       return mediaQuery.matches;
+    },
+    /**
+     * Queries different aspects of the game to see if they are ready for the game to resume
+     */
+    gameReadyCheck: function () {
+      bus.$emit(`checkSoundReadyState`);
     },
   },
 };
