@@ -35,7 +35,7 @@ export default {
   methods: {
     choice: function (index) {
       if (this.pause) return;
-      this.$emit(`choice`, this.cards[index]);
+      bus.$emit(`choice`, this.cards[index]);
     },
   },
 };
