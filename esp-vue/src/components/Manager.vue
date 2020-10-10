@@ -37,7 +37,9 @@ import Instructions from "./Instructions.vue";
 import SelectionRow from "./SelectionRow.vue";
 import ScoreDisplay from "./ScoreDisplay.vue";
 import SettingsModal from "./SettingsModal";
-import SettingsBtn from "./SettingsBtn.vue";
+import SettingsBtn from "./SettingsBtn";
+import SoundManager from "./SoundManager";
+import GameOverModal from "./GameOverModal";
 
 // TODO: wire up game
 // TODO: scoring
@@ -70,7 +72,9 @@ export default {
     SettingsBtn,
     SelectionRow,
     SettingsModal,
+    SoundManager,
     ScoreDisplay,
+    GameOverModal,
   },
   methods: {
     registerListeners: function () {
