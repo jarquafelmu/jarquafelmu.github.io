@@ -1,19 +1,19 @@
 <template>
   <div class="d-none">
     <audio id="roundWon">
-      <source src="/assets/snd/round-won.mp3" type="audio/mpeg" />
+      <source src="../assets/snd/round-won.mp3" type="audio/mpeg" />
       Your browser does not support the audio element
     </audio>
     <audio id="roundLost">
-      <source src="/assets/snd/round-lost.mp3" type="audio/mpeg" />
+      <source src="../assets/snd/round-lost.mp3" type="audio/mpeg" />
       Your browser does not support the audio element
     </audio>
     <audio id="gameWon">
-      <source src="/assets/snd/game-won.mp3" type="audio/mpeg" />
+      <source src="../assets/snd/game-won.mp3" type="audio/mpeg" />
       Your browser does not support the audio element
     </audio>
     <audio id="gameLost">
-      <source src="/assets/snd/game-won.mp3" type="audio/mpeg" />
+      <source src="../assets/snd/game-lost.mp3" type="audio/mpeg" />
       Your browser does not support the audio element
     </audio>
   </div>
@@ -29,14 +29,16 @@ export default {
       gameWon: null,
       gameLost: null,
       soundArr: [],
+      soundPlaying: false,
+      soundPlayingCheckInterval: 300,
     };
   },
   created: function () {
     // create listeners to play sounds
     bus.$on(`choiceCorrect`, () => this.playSound(this.roundWon));
     bus.$on(`choiceWrong`, () => this.playSound(this.roundLost));
-    bus.$on(`gameWon`, () => this.playSound(this.gameWon));
-    bus.$on(`gameLost`, () => this.playSound(this.roundLost));
+    bus.$on(`playGameWon`, () => this.playSound(this.gameWon));
+    bus.$on(`playGameLost`, () => this.playSound(this.gameLost));
     bus.$on(`checkSoundReadyState`, () => {
       bus.$emit(`soundReadyStatus`, this.anyPlaying());
     });
@@ -52,6 +54,7 @@ export default {
      * Invokes the passed in sound reference to play
      */
     playSound: function (ref) {
+      bus.$emit(`soundStart`, ref);
       ref.play();
     },
     /**
