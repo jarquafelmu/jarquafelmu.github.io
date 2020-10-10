@@ -8,7 +8,7 @@
   >
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header bg-info">
           <div class="modal-title">Settings</div>
         </div>
         <div class="modal-body">
@@ -60,6 +60,9 @@ export default {
           bus.$emit(`requestSettings`);
           this.modal.show();
         } else this.modal.hide();
+      });
+      bus.$on(`DEBUG_TRIGGER_SETTINGS_MODAL`, () => {
+        this.modal.toggle();
       });
     },
   },
