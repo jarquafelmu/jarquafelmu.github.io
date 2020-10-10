@@ -180,6 +180,7 @@ export default {
       // split cookie string and get all individual name=value pairs in an array
       let cookieArr = document.cookie.split(`;`);
 
+      let foundCookie = false;
       // loop through the array elements
       cookieArr.forEach((cookie) => {
         let cookiePair = cookie.split(`=`);
@@ -190,12 +191,11 @@ export default {
           let results = decodeURIComponent(cookiePair[1]);
           results = JSON.parse(results);
           this.cookieSettings = results;
-          return true;
+          foundCookie = true;
         }
       });
 
-      // didn't find our cookie
-      return false;
+      return foundCookie;
     },
     /**
      * For the passed in preferenc, determine if the user device has that enabled
