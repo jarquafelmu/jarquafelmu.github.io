@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { bus } from '../main';
+import { bus } from "../main";
 export default {
   name: `SettingsBtn`,
   data() {
@@ -50,14 +50,10 @@ export default {
       this.schemeCheckState = document.getElementById(
         `SettingsBtnSwitch`
       ).checked;
-      console.log(`schemeCheckState:`, this.schemeCheckState);
       bus.$emit(`schemeChoiceChanged`, this.schemeCheckState);
-      console.log(`sent schemeChoiceChanged event`);
     },
     handle: function () {
-      console.log(`in 'handle'`);
       bus.$emit(`displayModal`, true);
-      console.log(`sent 'displayModal' broadcast`);
     },
   },
 };
