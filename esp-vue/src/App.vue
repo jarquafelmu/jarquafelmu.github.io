@@ -163,7 +163,6 @@ export default {
     storeStateInCookie: function (daysToLive = 10) {
       // encode value in order to escape semicolons, commas, and whitespace
       let strJson = JSON.stringify(this.appSettings);
-      // console.log(`strJson`, strJson);
       let cookie = `${this.cookieId}=${encodeURIComponent(strJson)}`;
       if (typeof daysToLive === `number`) {
         /* Sets the max-age attribute so that the cookie expires after the
