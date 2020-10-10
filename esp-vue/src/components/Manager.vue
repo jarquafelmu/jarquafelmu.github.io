@@ -87,23 +87,37 @@ export default {
       });
 
       bus.$on(`validateChoice`, (data) => {
-        const chosenCard = this.cards[random(0, this.cards.length)];
+        console.log(`in validateChoice with`, data);
+        this.selectedCard = this.cards[random(0, this.cards.length)];
+        console.log(`cards`, this.cards);
+        this.setCardFace(this.selectedCard);
+        console.log(`chosenCard`, this.selectedCard, `choice card`, data);
 
-        if (chosenCard.id === data.id) {
+        if (this.selectedCard.id === data.id) {
           bus.$emit(`choiceCorrect`);
           this.score.correct++;
         } else {
           bus.$emit(`choiceWrong`);
+          bus.$emit(`shake`);
         }
         this.score.total++;
 
         bus.$emit(`scoreUpdate`, this.score);
+
+        {
+          // check score against goals
+          if (this.checkForEnd()) return;
+        }
+
+        // pause interaction with the game to give the user time to appreciate this round
         bus.$emit(`pause`);
         setTimeout(() => {
           this.setCardFace(this.cards.back);
           bus.$emit(`unpause`);
         }, this.timeOutAmt);
       });
+
+      bus.$on(`gameLost`);
     },
     setCardFace: function (card) {
       this.selectedCard = card;
