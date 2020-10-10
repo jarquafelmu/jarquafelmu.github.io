@@ -11,7 +11,6 @@
     "bootstrap": "5.0.0-alpha2",
     "core-js": "^3.6.5",
     "csshake": "^1.5.3",
-    "howler": "^2.2.0",
     "node-sass": "^4.14.1",
     "vue": "^2.6.12"
   },
@@ -43,8 +42,7 @@
     "rules": {
       "quotes": [
         "error",
-        "backtick",
-        "single"
+        "backtick"
       ]
     }
   },
