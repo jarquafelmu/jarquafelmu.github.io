@@ -60,6 +60,7 @@ export default {
         threshold: 5,
         max: 10,
       },
+      gameEnded: false,
     };
   },
   created: function () {
