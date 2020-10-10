@@ -123,5 +123,18 @@ export default {
       this.selectedCard = card;
     },
   },
+  checkForEnd: function () {
+    if (this.gameEnded) return true;
+    const gameWon = this.score.correct >= this.score.threshold;
+    const gameLost = this.score.total >= this.score.max;
+    const gameOver = gameWon || gameLost;
+    if (gameOver) {
+      if (gameWon) bus.$emit(`gameWon`);
+      else if (gameLost) bus.$emit(`gameLost`);
+      bus.$emit(`gameOver`);
+      return (this.gameEnded = true);
+    }
+    return false;
+  },
 };
 </script>
