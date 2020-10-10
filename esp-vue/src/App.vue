@@ -210,6 +210,19 @@ export default {
     gameReadyCheck: function () {
       bus.$emit(`checkSoundReadyState`);
     },
+
+    /**
+     * Triggers the device to vibrate
+     * @param {Array} pattern
+     */
+    vibrate: function (pattern = [100, 30, 200]) {
+      if (!(`vibrate` in window.navigator)) {
+        return console.error(
+          `Your browser does not support device vibration. :(`
+        );
+      }
+      window.navigator.vibrate(pattern);
+    },
   },
 };
 </script>
