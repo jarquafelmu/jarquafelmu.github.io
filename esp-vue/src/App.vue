@@ -111,6 +111,17 @@ export default {
         `soundReadyStatus`,
         (status) => (this.gameReadyCheckQualifiers.sound = status)
       );
+
+      bus.$on(`gameOver`, () => {
+        // 1 second after the game is declared over, remove all event handling
+        setTimeout(() => {
+          bus.$off();
+        }, 2000);
+      });
+
+      bus.$on(`choiceWrong`, () => {
+        this.vibrate();
+      });
     },
     /**
      * Applies or removes the dark theme
