@@ -25,6 +25,8 @@
       <ScoreDisplay :score="score" class="col-auto mx-auto" />
     </div>
     <SettingsModal />
+    <GameOverModal />
+    <SoundManager />
   </div>
 </template>
 
