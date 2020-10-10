@@ -43,7 +43,6 @@ export default {
   created: function () {
     // remove any listener
     bus.$off();
-    this.body = document.getElementsByTagName(`BODY`)[0];
   },
   mounted() {
     this.prepare();
