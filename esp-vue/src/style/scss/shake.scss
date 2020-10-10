@@ -1,0 +1,23 @@
+@import "~csshake/scss/_tools.scss";
+
+.my-custom-shake {
+  @include do-shake(
+    /* name of the keyframe animation */ $name: "my-custom-shake",
+    /* max number for random to assign in x axis */ $h: 5px,
+    /* max number for random to assign in y axis */ $v: 5px,
+    /* max number for random rotation */ $r: 3deg,
+    /* the animation-duration time value */ $dur: 100ms,
+    /* the precision of the keyframes animation. 0.02 generates keyframes each 2% and and 0.1 each 10% */
+      $precision: 0.02,
+    /* wether the shaking should fade in and out */ $opacity: false,
+    /* the animation-iteration-count value */ $q: 3,
+    /* animation-timing-function value */ $t: ease-in-out,
+    /* animation-delay time value */ $delay: null,
+    /* the part of the keyframes where apply the animation */ $chunk: 100%
+  );
+}
+
+/* Example shake-crazy */
+.demo-shake-crazy {
+  @include do-shake("demo-shake-crazy", 40, 40, 20, 100ms, 0.1, $opacity: true);
+}
