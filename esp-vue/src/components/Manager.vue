@@ -57,7 +57,7 @@ export default {
       score: {
         correct: 0,
         total: 0,
-        target: 5,
+        threshold: 5,
         max: 10,
       },
     };
