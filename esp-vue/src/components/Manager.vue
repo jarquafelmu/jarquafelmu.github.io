@@ -1,28 +1,30 @@
 <template>
-  <div class="container">
-    <SettingsBtn />
-    <div class="row">
-      <div class="col">
-        <h1><GameTitle :data="GameTitle" />!</h1>
+  <div>
+    <div class="container">
+      <SettingsBtn />
+      <div class="row">
+        <div class="col">
+          <h1><GameTitle :data="GameTitle" />!</h1>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-auto mx-auto">
-        <CardHero :card="selectedCard" />
+      <div class="row">
+        <div class="col-auto mx-auto">
+          <CardHero :card="selectedCard" />
+        </div>
       </div>
-    </div>
-    <div class="row mt-4">
-      <div class="col">
-        <h5><Instructions /></h5>
+      <div class="row mt-4">
+        <div class="col">
+          <h5><Instructions /></h5>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <SelectionRow :cards="cards" />
+      <div class="row">
+        <div class="col">
+          <SelectionRow :cards="cards" />
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <ScoreDisplay class="col-auto mx-auto" />
+      <div class="row">
+        <ScoreDisplay class="col-auto mx-auto" />
+      </div>
     </div>
     <SettingsModal />
     <GameOverModal />
@@ -44,15 +46,11 @@ import SettingsBtn from "./SettingsBtn";
 import SoundManager from "./SoundManager";
 import GameOverModal from "./GameOverModal";
 
-// TODO: wire up game
-// TODO: scoring
-// TODO: show card
-//
 export default {
   name: `Manager`,
   data() {
     return {
-      timeOutAmt: 3000,
+      timeOutAmt: 1500,
       GameTitle: `ESP Tester`,
       selectedCard: null,
       cards: cards,
@@ -66,7 +64,7 @@ export default {
     };
   },
   created: function () {
-    this.setCardFace(this.cards.back);
+    this.resetCard();
     this.registerListeners();
   },
   components: {
@@ -85,16 +83,12 @@ export default {
       bus.$on(`choice`, (data) => {
         // fires when the user clicks on a card in the bottom row
         // this.setCardFace(data);
-        console.log(`in choice with`, data);
         bus.$emit(`validateChoice`, data);
       });
 
       bus.$on(`validateChoice`, (data) => {
-        console.log(`in validateChoice with`, data);
-        this.selectedCard = this.cards[random(0, this.cards.length)];
-        console.log(`cards`, this.cards);
+        this.selectedCard = this.getCard();
         this.setCardFace(this.selectedCard);
-        console.log(`chosenCard`, this.selectedCard, `choice card`, data);
 
         if (this.selectedCard.id === data.id) {
           bus.$emit(`choiceCorrect`);
@@ -114,30 +108,54 @@ export default {
 
         // pause interaction with the game to give the user time to appreciate this round
         bus.$emit(`pause`);
-        setTimeout(() => {
-          this.setCardFace(this.cards.back);
-          bus.$emit(`unpause`);
+        this.resetTimeout = setTimeout(() => {
+          this.resetCard();
+          if (!this.gameEnded) bus.$emit(`unpause`);
         }, this.timeOutAmt);
       });
+      bus.$on(`soundStop`, () => {
+        // the game should reset and unpause a soon as the sound is finished,
+        // but the timeout should ensure that it happens.
+        // if this fires correctly however, it should clear the timeout so that it
+        // doesn't also happen
+        this.resetCard();
+        if (!this.gameEnded) bus.$emit(`unpause`);
+        clearTimeout(this.resetTimeout);
+      });
 
-      bus.$on(`gameLost`);
+      // bus.$on(`gameLost`);
     },
     setCardFace: function (card) {
       this.selectedCard = card;
     },
-  },
-  checkForEnd: function () {
-    if (this.gameEnded) return true;
-    const gameWon = this.score.correct >= this.score.threshold;
-    const gameLost = this.score.total >= this.score.max;
-    const gameOver = gameWon || gameLost;
-    if (gameOver) {
-      if (gameWon) bus.$emit(`gameWon`);
-      else if (gameLost) bus.$emit(`gameLost`);
-      bus.$emit(`gameOver`);
-      return (this.gameEnded = true);
-    }
-    return false;
+    getCard: function () {
+      const randomIndex = random(0, Object.keys(this.cards).length - 1);
+      const randomKey = Object.keys(this.cards)[randomIndex];
+      return this.cards[randomKey];
+    },
+    resetCard: function () {
+      this.setCardFace(this.cards.back);
+      bus.$emit(`resetCard`);
+    },
+    checkForEnd: function () {
+      if (this.gameEnded) return true;
+      const gameWon = this.score.correct >= this.score.threshold;
+      const gameLost = this.score.total >= this.score.max;
+      const gameOver = gameWon || gameLost;
+      if (gameOver) {
+        if (gameWon) bus.$emit(`gameWon`);
+        else if (gameLost) bus.$emit(`gameLost`);
+        setTimeout(() => {
+          if (gameWon) bus.$emit(`playGameWon`);
+          else if (gameLost) bus.$emit(`playGameLost`);
+        }, 1000);
+        bus.$emit(`gameOver`);
+
+        return (this.gameEnded = true);
+      }
+
+      return false;
+    },
   },
 };
 </script>
