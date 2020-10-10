@@ -30,7 +30,7 @@ export default {
         scheme: `(prefers-color-scheme: dark)`,
       },
       shakeClassName: `my-custom-shake`,
-      body: null,
+      shakeElement: null,
       gameReadyCheckQualifiers: {
         sound: false,
         paused: false,
@@ -49,6 +49,7 @@ export default {
     this.prepare();
     this.registerListeners();
     this.react();
+    this.shakeElement = document.querySelector(`.container`);
   },
   methods: {
     /**
@@ -91,10 +92,10 @@ export default {
         // if appsettings motion is true then exit
         // because the user has chosen to supress motion
         if (this.appSettings.motion) return;
-        this.body.classList.add(this.shakeClassName);
+        this.shakeElement.classList.add(this.shakeClassName);
       });
       document.addEventListener(`animationend`, () => {
-        this.body.classList.remove(this.shakeClassName);
+        this.shakeElement.classList.remove(this.shakeClassName);
       });
 
       bus.$on(`gameReadyCheck`, () => {
