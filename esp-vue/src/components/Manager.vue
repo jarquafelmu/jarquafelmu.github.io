@@ -31,11 +31,12 @@
 <script>
 import { bus } from "../main";
 import { random } from "../js/utils";
-import GameTitle from "./GameTitle.vue";
-import CardHero from "./CardHero.vue";
-import Instructions from "./Instructions.vue";
-import SelectionRow from "./SelectionRow.vue";
-import ScoreDisplay from "./ScoreDisplay.vue";
+import cards from "../assets/cards";
+import GameTitle from "./GameTitle";
+import CardHero from "./CardHero";
+import Instructions from "./Instructions";
+import SelectionRow from "./SelectionRow";
+import ScoreDisplay from "./ScoreDisplay";
 import SettingsModal from "./SettingsModal";
 import SettingsBtn from "./SettingsBtn";
 import SoundManager from "./SoundManager";
