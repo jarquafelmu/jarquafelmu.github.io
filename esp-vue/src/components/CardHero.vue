@@ -47,7 +47,7 @@ export default {
   &.zener-card {
     width: 200px !important;
     height: 300px !important;
-    transition: 1s linear;
+    transition: 0.5s linear;
 
     .card-img {
       padding-right: 35px;
