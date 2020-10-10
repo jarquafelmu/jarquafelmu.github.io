@@ -59,7 +59,7 @@ export default {
       // get scheme and motion states from cookie
       this.getStateFromCookie();
 
-      // if this is null then our cookie didn't have anything, so check the device preference
+      // if the cookie didn't contain the preference, fall back and get it from the device
       this.appSettings.scheme =
         this.cookieSettings.scheme !== null
           ? this.cookieSettings.scheme
