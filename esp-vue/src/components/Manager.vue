@@ -83,6 +83,7 @@ export default {
       bus.$on(`choice`, (data) => {
         // fires when the user clicks on a card in the bottom row
         // this.setCardFace(data);
+        console.log(`in choice with`, data);
         bus.$emit(`validateChoice`, data);
       });
 
