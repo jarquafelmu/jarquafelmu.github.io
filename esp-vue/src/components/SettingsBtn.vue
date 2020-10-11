@@ -65,7 +65,7 @@ export default {
   right: 25%;
   top: 3%;
   font-size: 2rem;
-  opacity: 30%;
+  opacity: 80%;
   transition: 0.18s ease;
 
   #SettingsBtnGlyph {
