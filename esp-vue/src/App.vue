@@ -68,8 +68,6 @@ export default {
         this.cookieSettings.motion !== null
           ? this.cookieSettings.motion
           : this.getDevicePreference(this.devicePreferences.motion);
-
-      this.storeStateInCookie();
     },
     /**
      * Registers event listeners
