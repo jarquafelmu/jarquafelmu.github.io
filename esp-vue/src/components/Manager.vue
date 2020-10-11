@@ -122,8 +122,6 @@ export default {
         if (!this.gameEnded) bus.$emit(`unpause`);
         clearTimeout(this.resetTimeout);
       });
-
-      // bus.$on(`gameLost`);
     },
     setCardFace: function (card) {
       this.selectedCard = card;
