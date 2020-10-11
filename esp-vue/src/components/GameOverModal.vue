@@ -44,6 +44,7 @@ export default {
         `You won, maybe you won't next time`,
         `Look who just might have ESP`,
         `Beginners luck.`,
+        `Best 2 out of 3?`,
         `You cheated some how, didn't you?`,
       ],
       losingMsgs: [
@@ -61,10 +62,6 @@ export default {
       keyboard: false,
     });
     this.registerListeners();
-    // setTimeout(() => {
-    //   bus.$emit(`gameLost`);
-    //   bus.$emit(`DEBUG_TRIGGER_GAMEOVER_MODAL`);
-    // }, 1000);
   },
   methods: {
     saveSettings: function () {
