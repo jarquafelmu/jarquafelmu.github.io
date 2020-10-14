@@ -1,12 +1,14 @@
 // Required
 @import "~bootstrap";
 
+// required for shaking
 @import "~csshake/scss/csshake.scss";
+// custom shaking rules
+@import "./style/scss/shake.scss";
 
 // theming
-// @import "css/imported/darkster.scss"; // dark
+@import "./style/scss/bootstrap-dark.scss";
 
 // customization
-@import "./style/scss/boostrap-mods.scss";
+@import "./style/scss/bootstrap-mods.scss";
 @import "./style/scss/card_styling.scss";
-@import "./style/scss/shake.scss";
