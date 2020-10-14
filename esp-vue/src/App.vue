@@ -65,7 +65,9 @@ export default {
      */
     prepare: function () {
       // get scheme and motion states from cookie
-      this.getStateFromCookie();
+      if (!this.getStateFromCookie()) {
+        console.log(`Did not find cookie`);
+      }
 
       // if the cookie didn't contain the preference, fall back and get it from the device
       this.appSettings.scheme =
