@@ -45,10 +45,6 @@ export default {
   components: {
     Manager,
   },
-  created: function () {
-    // remove any listener
-    bus.$off();
-  },
   mounted() {
     this.prepare();
     this.registerListeners();
