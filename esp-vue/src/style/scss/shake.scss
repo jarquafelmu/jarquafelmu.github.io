@@ -1,6 +1,6 @@
 @import "~csshake/scss/_tools.scss";
 
-.my-custom-shake {
+.shaker {
   @include do-shake(
     /* name of the keyframe animation */ $name: "my-custom-shake",
     /* max number for random to assign in x axis */ $h: 5px,
