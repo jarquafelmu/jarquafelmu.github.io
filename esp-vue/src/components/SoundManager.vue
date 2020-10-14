@@ -28,9 +28,10 @@ export default {
       roundLost: null,
       gameWon: null,
       gameLost: null,
-      soundArr: [],
+      soundRefs: [],
       soundPlaying: false,
       soundPlayingCheckInterval: 300,
+      volume: 0,
     };
   },
   created: function () {
@@ -42,12 +43,16 @@ export default {
     bus.$on(`checkSoundReadyState`, () => {
       bus.$emit(`soundReadyStatus`, this.anyPlaying());
     });
+    bus.$on(`setVolume`, (percentage) => this.setVolume(percentage));
   },
   mounted() {
-    this.soundArr.push((this.roundWon = document.getElementById(`roundWon`)));
-    this.soundArr.push((this.roundLost = document.getElementById(`roundLost`)));
-    this.soundArr.push((this.gameWon = document.getElementById(`gameWon`)));
-    this.soundArr.push((this.gameLost = document.getElementById(`gameLost`)));
+    this.soundRefs.push((this.roundWon = document.getElementById(`roundWon`)));
+    this.soundRefs.push(
+      (this.roundLost = document.getElementById(`roundLost`))
+    );
+    this.soundRefs.push((this.gameWon = document.getElementById(`gameWon`)));
+    this.soundRefs.push((this.gameLost = document.getElementById(`gameLost`)));
+    // this.setVolume(0.1);
   },
   methods: {
     /**
@@ -55,6 +60,7 @@ export default {
      */
     playSound: function (ref) {
       bus.$emit(`soundStart`, ref);
+      ref.volume = this.volume;
       ref.play();
     },
     /**
@@ -65,10 +71,16 @@ export default {
       return false;
     },
     /**
+     * Sets the volume for the sounds
+     */
+    setVolume: function (percentage) {
+      this.volume = percentage;
+    },
+    /**
      * Determines if any of the possible sounds are currently active
      */
     anyPlaying: function () {
-      return this.soundArr.any((ref) => this.isPlaying(ref));
+      return this.soundRefs.any((ref) => this.isPlaying(ref));
     },
   },
 };

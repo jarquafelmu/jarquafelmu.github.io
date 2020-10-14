@@ -18,18 +18,21 @@ export default {
       appSettings: {
         scheme: false,
         motion: false,
+        volume: 0.1,
       },
+      defaultVolume: 0.1,
       cookieId: `espAppUserSettings`,
       cookieSettings: {
         scheme: null,
         motion: null,
+        volume: null,
       },
       darkThemePath: `css/dark.css`,
       devicePreferences: {
         motion: `(prefers-reduced-motion: reduce)`,
         scheme: `(prefers-color-scheme: dark)`,
       },
-      shakeClassName: `my-custom-shake`,
+      shakeClassName: `shaker`,
       shakeElement: null,
       gameReadyCheckQualifiers: {
         sound: false,
@@ -74,6 +77,11 @@ export default {
         this.cookieSettings.motion !== null
           ? this.cookieSettings.motion
           : this.getDevicePreference(this.devicePreferences.motion);
+
+      this.appSettings.volume =
+        this.cookieSettings.volume || this.defaultVolume;
+
+      bus.$emit(`setVolume`, this.appSettings.volume);
     },
     /**
      * Registers event listeners
@@ -89,6 +97,7 @@ export default {
         // gets data from settings modal
         this.appSettings.motion = data.motion;
         this.appSettings.scheme = data.scheme;
+        this.appSettings.volume = data.volume;
         this.storeStateInCookie();
         this.updateScheme();
       });
@@ -116,7 +125,7 @@ export default {
       );
 
       bus.$on(`gameOver`, () => {
-        // 1 second after the game is declared over, remove all event handling
+        // 2 seconds after the game is declared over, remove all event handling
         setTimeout(() => {
           bus.$off();
         }, 2000);

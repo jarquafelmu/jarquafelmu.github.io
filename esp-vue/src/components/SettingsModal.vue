@@ -15,7 +15,7 @@
           <div class="container">
             <div class="row">
               <div class="col">
-                <SchemeToggle />
+                <SettingOptions />
               </div>
             </div>
           </div>
@@ -31,7 +31,7 @@
 </template>
 <script>
 import { bus, bootstrap } from "../main";
-import SchemeToggle from "./SchemeToggle";
+import SettingOptions from "./SettingOptions";
 
 export default {
   name: `SettingsModal`,
@@ -46,7 +46,7 @@ export default {
     this.registerListeners();
   },
   components: {
-    SchemeToggle,
+    SettingOptions,
   },
   methods: {
     saveSettings: function () {
