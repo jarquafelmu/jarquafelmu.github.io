@@ -59,6 +59,9 @@ export default {
     console.log(this.bodyElement);
     this.shakeElement = document.querySelector(`.container`);
   },
+  beforeDestroy() {
+    bus.$off();
+  },
   methods: {
     /**
      * Sets up the app settings for the game
