@@ -35,6 +35,8 @@ export default {
         sound: false,
         paused: false,
       },
+      bodyElement: null,
+      useDarkMode: false,
     };
   },
   components: {
@@ -47,7 +49,11 @@ export default {
   mounted() {
     this.prepare();
     this.registerListeners();
-    this.react();
+    this.$nextTick(function () {
+      this.bodyElement = document.getElementsByTagName("BODY")[0];
+      this.updateScheme();
+    });
+    console.log(this.bodyElement);
     this.shakeElement = document.querySelector(`.container`);
   },
   methods: {
@@ -84,7 +90,7 @@ export default {
         this.appSettings.motion = data.motion;
         this.appSettings.scheme = data.scheme;
         this.storeStateInCookie();
-        this.react();
+        this.updateScheme();
       });
 
       bus.$on(`shake`, () => {
@@ -123,7 +129,7 @@ export default {
     /**
      * Applies or removes the dark theme
      */
-    react: function () {
+    updateScheme: function () {
       if (this.appSettings.scheme) {
         this.applyDarkTheme();
       } else {
@@ -134,25 +140,13 @@ export default {
      * Adds a dark theme stylesheet to the DOM
      */
     applyDarkTheme: function () {
-      let file = document.createElement(`link`);
-      file.rel = `stylesheet`;
-      file.href = this.darkThemePath;
-      document.head.appendChild(file);
+      this.bodyElement.classList.add("darkmode");
     },
     /**
      * Removes the dark theme stylesheet from the DOM
      */
     removeDarkTheme: function () {
-      const styleSheet = document.querySelector(
-        `link[rel=stylesheet][href*="${this.darkThemePath}"]`
-      );
-
-      if (!styleSheet) return;
-
-      // disable sheet first to remove its styling effects
-      styleSheet.disabled = true;
-      // remove the stylesheet
-      styleSheet.remove();
+      this.bodyElement.classList.remove("darkmode");
     },
     /**
      * Creates a cookie with the desired information
